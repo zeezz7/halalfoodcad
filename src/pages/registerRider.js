@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 import Footer from "./../app/components/footer";
 import Nav from "./../app/components/nav";
 import Button from "./../app/ui/button";
@@ -40,7 +41,13 @@ export default function registerRider() {
           </div>
           {/* Image - hidden on mobile */}
           <div className="hidden lg:block">
-            <img src="rider1.png" alt="Restaurant" />
+            <Image
+              src="/rider1.png"
+              alt="Rider"
+              width={500}
+              height={400}
+              className="object-contain"
+            />
           </div>
         </div>
       </div>

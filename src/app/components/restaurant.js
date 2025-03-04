@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "../ui/button";
 import Link from "next/link";
+import Image from "next/image";
 
 export default function restaurant() {
   return (
@@ -16,15 +17,17 @@ export default function restaurant() {
         </div>
         <Link href="/registerRestaurant">
           <div className="w-full sm:w-auto">
-            <Button value={"Register Now"} />
+            <Button value={"Register Now"} customWidth="w-full md:w-[180px]" />
           </div>
         </Link>
       </div>
       <div className="mt-8 md:mt-0 flex justify-center md:justify-start">
-        <img
-          src="restimg.png"
-          alt="Restaurant"
-          className="w-[80%] sm:w-[70%] md:w-auto max-w-[500px] object-contain"
+        <Image
+          src="/restimg.png"
+          alt="Rider"
+          width={600}
+          height={600}
+          className=" sm:w-[70%] md:w-auto sm:min-width:auto lg:min-w-[300px] object-contain"
         />
       </div>
     </div>

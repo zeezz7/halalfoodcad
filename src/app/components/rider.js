@@ -1,6 +1,7 @@
 import React from "react";
 import Button from "../ui/button";
 import Link from "next/link";
+import Image from "next/image";
 
 function rider() {
   return (
@@ -16,15 +17,17 @@ function rider() {
         </div>
         <Link href="/registerRider">
           <div className="w-full sm:w-auto">
-            <Button value={"Register Now"} />
+            <Button value={"Register Now"} customWidth="w-full md:w-[180px]" />
           </div>
         </Link>
       </div>
       <div className="mt-8 md:mt-0 flex justify-center md:justify-end">
-        <img
-          src="riderimg.png"
+        <Image
+          src="/riderimg.png"
           alt="Rider"
-          className="w-[80%] sm:w-[70%] md:w-auto max-w-[500px] object-contain"
+          width={500}
+          height={400}
+          className="sm:w-[70%] md:w-auto sm:min-width:auto lg:min-w-[300px] object-contain"
         />
       </div>
     </div>

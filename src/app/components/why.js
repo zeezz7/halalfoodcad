@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 
 export default function why() {
   const obj = [
@@ -30,9 +31,11 @@ export default function why() {
             key={index}
             className="w-full md:w-1/3 flex flex-col space-y-4 bg-[#FFFAEA] p-4 sm:p-5 md:p-6 rounded-2xl transition-transform hover:scale-105"
           >
-            <img
-              src={item.icon}
+            <Image
+              src={`/${item.icon}`}
               alt={item.title}
+              width={50}
+              height={50}
               className="w-[40px] sm:w-[45px] md:w-[50px]"
             />
             <div className="text-lg sm:text-xl md:text-2xl font-semibold">

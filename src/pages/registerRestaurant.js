@@ -2,6 +2,7 @@ import React from "react";
 import Footer from "./../app/components/footer";
 import Nav from "./../app/components/nav";
 import Button from "./../app/ui/button";
+import Image from "next/image";
 
 export default function registerRestaurant() {
   return (
@@ -12,7 +13,7 @@ export default function registerRestaurant() {
           <div className="w-full md:w-1/2 flex flex-col space-y-8 md:space-y-15">
             <div className="flex flex-col space-y-4 md:space-y-5">
               <h1 className="text-2xl md:text-3xl text-[#1B3B31] font-bold text-left">
-                Register Your Restaurant & Grow Business!!
+                Register Your Restaurant &amp; Grow Business!!
               </h1>
               <p className="w-full md:w-3/4 text-sm md:text-base text-left">
                 Join our halal-certified platform to reach more customers, boost
@@ -40,7 +41,13 @@ export default function registerRestaurant() {
           </div>
           {/* Image - hidden on mobile */}
           <div className="hidden lg:block">
-            <img src="rest1.png" alt="Restaurant" />
+            <Image
+              src="/rest1.png"
+              alt="Restaurant"
+              width={500}
+              height={400}
+              className="object-contain"
+            />
           </div>
         </div>
       </div>
