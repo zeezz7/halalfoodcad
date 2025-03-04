@@ -17,8 +17,8 @@ export default function registerRestaurant() {
               </h1>
               <p className="w-full md:w-3/4 text-sm md:text-base text-left">
                 Join our halal-certified platform to reach more customers, boost
-                orders, and expand your restaurant's visibility. Fill in your
-                details to get started!
+                orders, and expand your restaurant&lsquo;s visibility. Fill in
+                your details to get started!
               </p>
             </div>
             <div className="flex flex-col space-y-4 md:space-y-5 items-center md:items-start">
