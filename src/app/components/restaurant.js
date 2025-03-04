@@ -29,7 +29,7 @@ export default function restaurant() {
           height={600}
           quality={75}
           loading="lazy"
-          className="sm:w-[70%] md:w-auto sm:min-width:auto lg:min-w-[300px] object-contain"
+          className="sm:w-[70%] md:w-auto sm:min-width:auto  lg:min-w-[300px] object-cover"
         />
       </div>
     </div>

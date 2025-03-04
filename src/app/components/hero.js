@@ -39,11 +39,11 @@ function hero() {
           priority
           width={400}
           height={400}
-          src="Group2.svg"
+          src="/hero.png"
           alt="Group2"
           quality={75}
           loading="eager"
-          className="w-[300px] md:w-[500px] select-none mx-auto md:mx-0"
+          className="w-[300px] md:w-[500px] select-none mx-auto md:mx-0 object-contain"
         />
       </div>
     </div>

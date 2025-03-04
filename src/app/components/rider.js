@@ -27,7 +27,7 @@ function rider() {
           alt="Rider"
           width={500}
           height={400}
-          className="sm:w-[70%] md:w-auto sm:min-width:auto lg:min-w-[300px] object-contain"
+          className="sm:w-[70%] md:w-auto sm:min-width:auto lg:min-w-[300px] object-cover"
         />
       </div>
     </div>
