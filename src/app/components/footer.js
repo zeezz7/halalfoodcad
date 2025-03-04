@@ -15,7 +15,12 @@ function Footer() {
         <div className="flex flex-wrap justify-between items-start mb-16">
           {/* Logo/Brand */}
           <div className="w-full md:w-auto mb-6 md:mb-0">
-            <h2 className="text-2xl font-semibold">HALAL GOES</h2>
+            <Link
+              href="/"
+              className="text-2xl font-semibold hover:text-gray-400 transition-colors cursor-pointer"
+            >
+              HALAL GOES
+            </Link>
           </div>
 
           {/* Address and Contact */}
