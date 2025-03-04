@@ -44,8 +44,8 @@ export default function registerRider() {
             <Image
               src="/rider1.png"
               alt="Rider"
-              width={500}
-              height={400}
+              width={400}
+              height={300}
               className="object-contain"
             />
           </div>

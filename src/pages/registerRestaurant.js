@@ -44,7 +44,7 @@ export default function registerRestaurant() {
             <Image
               src="/rest1.png"
               alt="Restaurant"
-              width={500}
+              width={400}
               height={400}
               className="object-contain"
             />
