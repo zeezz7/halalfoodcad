@@ -1,0 +1,101 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+
+/* Import the Silka font */
+@font-face {
+  font-family: "Silka";
+  src: url("../public/fonts/Silka-Regular.woff2") format("woff2"),
+    url("../public/fonts/Silka-Regular.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Silka";
+  src: url("../public/fonts/Silka-Bold.woff2") format("woff2"),
+    url("../public/fonts/Silka-Bold.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+
+/* Add Silka as default font */
+@layer base {
+  html {
+    font-family: "Silka", system-ui, sans-serif;
+  }
+}
+
+body {
+  font-family: "Silka", sans-serif;
+}
+
+::selection {
+  background-color: #9ca3af; /* gray-400 */
+  color: #1b3b31;
+}
+
+::-moz-selection {
+  background-color: #9ca3af; /* gray-400 */
+  color: #1b3b31;
+}
+
+body {
+  scrollbar-width: thin;
+  scrollbar-color: #1b3b31 #f0f0f0;
+}
+
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: #1b3b31;
+  border-radius: 10px;
+  border: 2px solid #f0f0f0;
+}
+
+/* Ensure the custom scrollbar styles are not overridden */
+html,
+body {
+  overflow: auto;
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+
+  .scrollbar-thumb-primary {
+    scrollbar-color: #1b3b31 #f0f0f0;
+  }
+
+  .scrollbar-track-custom {
+    scrollbar-color: #f0f0f0;
+  }
+
+  .scrollbar::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .scrollbar::-webkit-scrollbar-track {
+    background: #f0f0f0;
+  }
+
+  .scrollbar::-webkit-scrollbar-thumb {
+    background-color: #1b3b31;
+    border-radius: 10px;
+    border: 2px solid #f0f0f0;
+  }
+}

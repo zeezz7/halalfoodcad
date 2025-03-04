@@ -1,26 +1,32 @@
 @import "tailwindcss";
+@font-face {
+  font-family: "Silka";
+  src: url("/fonts/Silka-Regular.woff2") format("woff2"),
+    url("/fonts/Silka-Regular.woff") format("woff");
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+@font-face {
+  font-family: "Silka";
+  src: url("/fonts/Silka-Bold.woff2") format("woff2"),
+    url("/fonts/Silka-Bold.woff") format("woff");
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  font-weight: bold;
+  font-style: normal;
+  font-display: swap;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: "Silka", sans-serif;
+}
+@layer base {
+  ::selection {
+    @apply bg-gray-400 text-white;
+  }
+  ::-moz-selection {
+    @apply bg-gray-400 text-white;
+  }
 }
