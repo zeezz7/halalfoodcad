@@ -9,7 +9,7 @@ function Footer() {
   };
 
   return (
-    <div className="bg-[#1B3B31] text-white py-10">
+    <div className="bg-[#1B3B31]  text-white py-10">
       {/* Main footer content */}
       <div className="container mx-auto px-4">
         <div className="flex flex-wrap justify-between items-start mb-16">

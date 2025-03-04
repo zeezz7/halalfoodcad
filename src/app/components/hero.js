@@ -5,7 +5,7 @@ import Image from "next/image";
 function hero() {
   return (
     <div className="pt-4 m-auto mt-[-30px] flex flex-col md:mt-[8px] md:flex-row w-[90%] md:w-[85%] min-h-[80vh] md:h-[90vh] justify-center items-center  font-sika">
-      <div className="flex flex-col h-1/2 justify-between w-full lg:w-[90%]">
+      <div className="flex flex-col h-full md:h-[340px] justify-between w-full lg:w-[90%]">
         <div className="flex flex-col space-y-4 md:space-y-7">
           <div className="text-[#1B3B31] tracking-normal text-[24px] sm:text-xl md:text-3xl lg:text-4xl font-bold text-center md:text-left pt-5 md:pt-0">
             Delivering Convenience, Ensuring{" "}
