@@ -33,10 +33,13 @@ function hero() {
       </div>
       <div className="w-full md:w-[70%] select-none mt-8 md:mt-0">
         <Image
+          priority
           width={500}
           height={500}
           src="Group2.svg"
           alt="Group2"
+          quality={75}
+          loading="eager"
           className="w-[300px] md:w-[500px] select-none mx-auto md:mx-0"
         />
       </div>

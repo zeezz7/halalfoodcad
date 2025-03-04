@@ -27,7 +27,9 @@ export default function restaurant() {
           alt="Rider"
           width={600}
           height={600}
-          className=" sm:w-[70%] md:w-auto sm:min-width:auto lg:min-w-[300px] object-contain"
+          quality={75}
+          loading="lazy"
+          className="sm:w-[70%] md:w-auto sm:min-width:auto lg:min-w-[300px] object-contain"
         />
       </div>
     </div>

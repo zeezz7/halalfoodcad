@@ -42,6 +42,7 @@ export default function registerRestaurant() {
           {/* Image - hidden on mobile */}
           <div className="hidden lg:block">
             <Image
+              priority
               src="/rest1.png"
               alt="Restaurant"
               width={400}

@@ -42,6 +42,7 @@ export default function registerRider() {
           {/* Image - hidden on mobile */}
           <div className="hidden lg:block">
             <Image
+              priority
               src="/rider1.png"
               alt="Rider"
               width={400}

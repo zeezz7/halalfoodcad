@@ -36,6 +36,8 @@ export default function why() {
               alt={item.title}
               width={50}
               height={50}
+              quality={75}
+              loading="lazy"
               className="w-[40px] sm:w-[45px] md:w-[50px]"
             />
             <div className="text-lg sm:text-xl md:text-2xl font-semibold">
