@@ -7,7 +7,7 @@ import Image from "next/image";
 export default function registerRestaurant() {
   return (
     <div className="bg-[#FFFAEA]">
-      <div className="min-h-screen">
+      <div className="pb-40">
         <Nav />
         <div className="flex justify-center items-center  px-4 sm:px-6 md:px-8 py-8">
           <div className="w-full md:w-1/2 flex flex-col space-y-8 md:space-y-15">
