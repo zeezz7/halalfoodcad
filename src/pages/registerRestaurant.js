@@ -127,18 +127,24 @@ export default function registerRestaurant() {
                 </h2>
                 {[
                   "Food License",
+                  "Restaurant Logo",
                   "Sample Menu (PDF or Images)",
                   "Kitchen Photos",
-                ].map((placeholder, index) => (
-                  <div
-                    key={index}
-                    className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2"
-                  >
-                    <input
-                      type="file"
-                      placeholder={placeholder}
-                      className="border-none focus:outline-none w-full text-sm md:text-base"
-                    />
+                ].map((label, index) => (
+                  <div key={index}>
+                    <label
+                      htmlFor={`file-upload-${index}`}
+                      className="block text-sm md:text-base font-medium text-gray-700 my-2"
+                    >
+                      {label}
+                    </label>
+                    <div className="border border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 ">
+                      <input
+                        id={`file-upload-${index}`}
+                        type="file"
+                        className="border-none focus:outline-none w-full text-sm md:text-base mt-1"
+                      />
+                    </div>
                   </div>
                 ))}
               </div>
