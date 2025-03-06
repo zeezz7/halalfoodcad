@@ -48,7 +48,7 @@ function Footer() {
                   href="/registerRider"
                   className="hover:text-gray-200 transition-colors cursor-pointer"
                 >
-                  Register as a rider
+                  Register as a Rider
                 </Link>
               </li>
               <li>
@@ -56,7 +56,7 @@ function Footer() {
                   href="/registerRestaurant"
                   className="hover:text-gray-200 transition-colors cursor-pointer"
                 >
-                  Register restaurant
+                  Register Restaurant
                 </Link>
               </li>
             </ul>
