@@ -1,9 +1,9 @@
 // pages/registerRider.js
 import React, { useState } from "react";
 import Image from "next/image";
-import Footer from "../src/app/components/footer";
-import Nav from "../src/app/components/nav";
-import Button from "../src/app/ui/button";
+import Footer from "./../app/components/footer";
+import Nav from "./../app/components/nav";
+import Button from "./../app/ui/button";
 // import { useRouter } from "next/router";
 
 export default function RegisterRider() {
@@ -52,47 +52,52 @@ export default function RegisterRider() {
     }
   };
 
-  // In registerRider.js, update the handleSubmit function:
-  // In registerRider.js, update the handleSubmit function:
-  // In registerRider.js, update the handleSubmit function:
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Basic validation
+    if (
+      !formData.fullName ||
+      !formData.email ||
+      !formData.phone ||
+      !formData.dateOfBirth ||
+      !formData.gender
+    ) {
+      setFormError("Please fill in all required fields");
+      return;
+    }
+
+    if (!formData.agreeToTerms) {
+      setFormError("You must agree to the terms and conditions");
+      return;
+    }
 
     try {
       setIsSubmitting(true);
       setFormError("");
 
-      // Create FormData object
+      // Create FormData object to send files and form data
       const submitData = new FormData();
 
-      // Add form fields
+      // Add text fields to FormData
       Object.keys(formData).forEach((key) => {
-        if (typeof formData[key] === "boolean") {
-          submitData.append(key, formData[key].toString());
-        } else if (formData[key]) {
-          submitData.append(key, formData[key]);
-        }
+        submitData.append(key, formData[key]);
       });
 
-      // Add files
+      // Add files to FormData
       Object.keys(files).forEach((key) => {
         if (files[key]) {
           submitData.append(key, files[key]);
         }
       });
 
-      console.log("Submitting form to /api/rider/register");
-
       // Send data to API
-      const response = await fetch("/api/rider/register", {
+      const response = await fetch("http://localhost:3000/api/rider/register", {
         method: "POST",
         body: submitData,
       });
-
-      // Check if the response is JSON
       const contentType = response.headers.get("content-type");
       if (!contentType || !contentType.includes("application/json")) {
-        // If not JSON, get the text and log it
         const text = await response.text();
         console.error("Non-JSON response:", text);
         throw new Error("Server returned non-JSON response");
@@ -101,20 +106,41 @@ export default function RegisterRider() {
       const data = await response.json();
 
       if (!response.ok) {
-        console.error("Server error response:", data);
-        throw new Error(data.message || "Server returned an error");
+        throw new Error(data.message || "Something went wrong");
       }
 
-      // Success handling
-      console.log("Registration successful:", data);
+      // Success!
       setFormSuccess(
         "Registration successful! We'll review your application and contact you soon."
       );
+      setFormData({
+        fullName: "",
+        email: "",
+        phone: "",
+        dateOfBirth: "",
+        gender: "",
+        bankAccountDetails: "",
+        upiWalletDetails: "",
+        preferredWorkingHours: "",
+        modeOfDelivery: "",
+        emergencyContact: "",
+        referralCode: "",
+        agreeToTerms: false,
+      });
+      setFiles({
+        governmentId: null,
+        driversLicense: null,
+        profilePhoto: null,
+        vehicleRegistration: null,
+        proofOfAddress: null,
+      });
 
-      // Reset form
-      // ...existing reset code...
+      // Redirect after successful registration if needed
+      // setTimeout(() => router.push('/registration-success'), 2000);
     } catch (error) {
       console.error("Registration failed:", error);
+      console.error("Registration failed:", error);
+      setFormError(error.message || "Registration failed. Please try again.");
       setFormError(error.message || "Registration failed. Please try again.");
     } finally {
       setIsSubmitting(false);

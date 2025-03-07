@@ -1,7 +1,8 @@
+// src/pages/api/rider/register.jsriderData
 import { IncomingForm } from "formidable";
-import dbConnect from "../../../lib/mongodb";
-import Rider from "../../../models/Rider";
-import { uploadToCloudinary } from "../../../lib/cloudinary";
+import dbConnect from "../../../../lib/mongodb";
+import Rider from "../../../../models/Rider";
+import { uploadToCloudinary } from "../../../../lib/cloudinary";
 import fs from "fs";
 
 export const config = {
@@ -11,21 +12,7 @@ export const config = {
 };
 
 export default async function handler(req, res) {
-  res.setHeader("Access-Control-Allow-Credentials", true);
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "X-Requested-With, Content-Type"
-  );
-
-  // Handle OPTIONS request
-  if (req.method === "OPTIONS") {
-    return res.status(200).end();
-  }
-
   console.log("API endpoint hit:", req.method);
-  console.log("Request headers:", req.headers);
 
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Method not allowed" });
@@ -56,8 +43,8 @@ export default async function handler(req, res) {
     });
 
     const { fields, files } = formData;
-    console.log("Fields received:", Object.keys(fields));
-    console.log("Files received:", Object.keys(files));
+    // console.log("Fields received:", Object.keys(fields));
+    // console.log("Files received:", Object.keys(files));
 
     // Basic validation
     if (!fields.fullName || !fields.email || !fields.phone) {
@@ -113,7 +100,7 @@ export default async function handler(req, res) {
             : files[docType];
 
           if (file && file.filepath) {
-            console.log(`Processing ${docType} file...`);
+            // console.log(`Processing ${docType} file...`);
 
             try {
               // Read file as buffer
@@ -130,7 +117,7 @@ export default async function handler(req, res) {
                 "rider-documents"
               )
                 .then((result) => {
-                  console.log(`${docType} uploaded to Cloudinary:`, result.url);
+                  // console.log(`${docType} uploaded to Cloudinary:`, result.url);
 
                   // Add to rider data
                   riderData[docType] = {

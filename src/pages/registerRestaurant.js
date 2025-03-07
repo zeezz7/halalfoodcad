@@ -1,7 +1,7 @@
 import React from "react";
-import Footer from "../src/app/components/footer";
-import Nav from "../src/app/components/nav";
-import Button from "../src/app/ui/button";
+import Footer from "../app/components/footer";
+import Nav from "../app/components/nav";
+import Button from "../app/ui/button";
 import Image from "next/image";
 
 export default function registerRestaurant() {
