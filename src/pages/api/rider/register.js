@@ -1,4 +1,3 @@
-// src/pages/api/rider/register.jsriderData
 import { IncomingForm } from "formidable";
 import dbConnect from "../../../../lib/mongodb";
 import Rider from "../../../../models/Rider";
@@ -27,11 +26,6 @@ export default async function handler(req, res) {
 
   console.log("API endpoint hit:", req.method);
   console.log("Request headers:", req.headers);
-
-  if (req.method !== "POST") {
-    return res.status(405).json({ message: "Method not allowed" });
-  }
-  console.log("API endpoint hit:", req.method);
 
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Method not allowed" });
