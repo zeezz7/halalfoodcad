@@ -92,7 +92,7 @@ export default function RegisterRider() {
       });
 
       // Send data to API
-      const response = await fetch("http://localhost:3000/api/rider/register", {
+      const response = await fetch("api/rider/register", {
         method: "POST",
         body: submitData,
       });
