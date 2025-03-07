@@ -13,8 +13,6 @@ export const config = {
 
 export default async function handler(req, res) {
   console.log("API endpoint hit:", req.method);
-  const startTime = Date.now();
-  console.log("API endpoint hit:", req.method, "at", new Date().toISOString());
 
   if (req.method !== "POST") {
     return res.status(405).json({ message: "Method not allowed" });

@@ -4,10 +4,10 @@ import Image from "next/image";
 import Footer from "./../app/components/footer";
 import Nav from "./../app/components/nav";
 import Button from "./../app/ui/button";
-import { useRouter } from "next/router";
+// import { useRouter } from "next/router";
 
 export default function RegisterRider() {
-  const router = useRouter();
+  // const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formError, setFormError] = useState("");
   const [formSuccess, setFormSuccess] = useState("");
