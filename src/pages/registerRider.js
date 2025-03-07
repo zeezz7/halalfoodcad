@@ -92,7 +92,7 @@ export default function RegisterRider() {
       });
 
       // Send data to API
-      const response = await fetch("http://localhost:3000/api/rider/register", {
+      const response = await fetch("/api/rider/register", {
         method: "POST",
         body: submitData,
       });
@@ -140,7 +140,6 @@ export default function RegisterRider() {
     } catch (error) {
       console.error("Registration failed:", error);
       console.error("Registration failed:", error);
-      setFormError(error.message || "Registration failed. Please try again.");
       setFormError(error.message || "Registration failed. Please try again.");
     } finally {
       setIsSubmitting(false);
