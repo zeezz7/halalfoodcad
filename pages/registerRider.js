@@ -1,9 +1,9 @@
 // pages/registerRider.js
 import React, { useState } from "react";
 import Image from "next/image";
-import Footer from "./../app/components/footer";
-import Nav from "./../app/components/nav";
-import Button from "./../app/ui/button";
+import Footer from "../src/app/components/footer";
+import Nav from "../src/app/components/nav";
+import Button from "../src/app/ui/button";
 // import { useRouter } from "next/router";
 
 export default function RegisterRider() {
@@ -11,7 +11,6 @@ export default function RegisterRider() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formError, setFormError] = useState("");
   const [formSuccess, setFormSuccess] = useState("");
-
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -44,133 +43,76 @@ export default function RegisterRider() {
   };
 
   const handleFileChange = (e) => {
-    const { name, files: fileList } = e.target;
-    if (fileList.length > 0) {
-      setFiles((prev) => ({
-        ...prev,
-        [name]: fileList[0],
+    const { name, files } = e.target;
+    if (files.length > 0) {
+      setFiles((prevFiles) => ({
+        ...prevFiles,
+        [name]: files[0],
       }));
     }
   };
 
+  // In registerRider.js, update the handleSubmit function:
+  // In registerRider.js, update the handleSubmit function:
+  // In registerRider.js, update the handleSubmit function:
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    // Basic validation
-    if (
-      !formData.fullName ||
-      !formData.email ||
-      !formData.phone ||
-      !formData.dateOfBirth ||
-      !formData.gender
-    ) {
-      setFormError("Please fill in all required fields");
-      return;
-    }
-
-    if (!formData.agreeToTerms) {
-      setFormError("You must agree to the terms and conditions");
-      return;
-    }
 
     try {
       setIsSubmitting(true);
       setFormError("");
 
-      // Create FormData object to send files and form data
+      // Create FormData object
       const submitData = new FormData();
 
-      // Add text fields to FormData
+      // Add form fields
       Object.keys(formData).forEach((key) => {
-        submitData.append(key, formData[key]);
+        if (typeof formData[key] === "boolean") {
+          submitData.append(key, formData[key].toString());
+        } else if (formData[key]) {
+          submitData.append(key, formData[key]);
+        }
       });
 
-      // Add files to FormData
+      // Add files
       Object.keys(files).forEach((key) => {
         if (files[key]) {
           submitData.append(key, files[key]);
         }
       });
 
-      // Get the base URL - important for correct API path in production
-      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "";
-      const apiUrl = `${baseUrl}/api/rider/register`;
-
-      console.log("Submitting to API URL:", apiUrl);
+      console.log("Submitting form to /api/rider/register");
 
       // Send data to API
-      const response = await fetch(apiUrl, {
+      const response = await fetch("/api/rider/register", {
         method: "POST",
         body: submitData,
       });
 
-      // Log the raw response status and headers for debugging
-      console.log("Response status:", response.status);
-      console.log(
-        "Response headers:",
-        Object.fromEntries([...response.headers.entries()])
-      );
-
-      // Check for non-JSON response
+      // Check if the response is JSON
       const contentType = response.headers.get("content-type");
-      let data;
-
       if (!contentType || !contentType.includes("application/json")) {
+        // If not JSON, get the text and log it
         const text = await response.text();
         console.error("Non-JSON response:", text);
-
-        // If we're getting a 405 Method Not Allowed, try verifying the API route
-        if (response.status === 405) {
-          // Optional: try an OPTIONS request to debug API route issues
-          try {
-            const optionsResponse = await fetch(apiUrl, { method: "OPTIONS" });
-            console.log("OPTIONS status:", optionsResponse.status);
-          } catch (optionsError) {
-            console.error("OPTIONS check failed:", optionsError);
-          }
-
-          throw new Error(
-            `Method not allowed (405) - Ensure API route exists at ${apiUrl} and accepts POST requests`
-          );
-        }
-
         throw new Error("Server returned non-JSON response");
       }
 
-      data = await response.json();
+      const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.message || "Something went wrong");
+        console.error("Server error response:", data);
+        throw new Error(data.message || "Server returned an error");
       }
 
-      // Success!
+      // Success handling
+      console.log("Registration successful:", data);
       setFormSuccess(
         "Registration successful! We'll review your application and contact you soon."
       );
 
       // Reset form
-      setFormData({
-        fullName: "",
-        email: "",
-        phone: "",
-        dateOfBirth: "",
-        gender: "",
-        bankAccountDetails: "",
-        upiWalletDetails: "",
-        preferredWorkingHours: "",
-        modeOfDelivery: "",
-        emergencyContact: "",
-        referralCode: "",
-        agreeToTerms: false,
-      });
-
-      setFiles({
-        governmentId: null,
-        driversLicense: null,
-        profilePhoto: null,
-        vehicleRegistration: null,
-        proofOfAddress: null,
-      });
+      // ...existing reset code...
     } catch (error) {
       console.error("Registration failed:", error);
       setFormError(error.message || "Registration failed. Please try again.");
@@ -178,6 +120,7 @@ export default function RegisterRider() {
       setIsSubmitting(false);
     }
   };
+
   return (
     <div className="bg-[#FFFAEA]">
       <div className="min-h-screen">
@@ -307,7 +250,7 @@ export default function RegisterRider() {
                     htmlFor="driversLicense"
                     className="block text-sm font-medium text-[#1B3B31] mb-1"
                   >
-                    Driver`&apos;`s License (if using a motor vehicle)
+                    Driver's License (if using a motor vehicle)
                   </label>
                   <input
                     type="file"

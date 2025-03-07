@@ -1,7 +1,7 @@
 import { IncomingForm } from "formidable";
-import dbConnect from "../../../../lib/mongodb";
-import Rider from "../../../../models/Rider";
-import { uploadToCloudinary } from "../../../../lib/cloudinary";
+import dbConnect from "../../../lib/mongodb";
+import Rider from "../../../models/Rider";
+import { uploadToCloudinary } from "../../../lib/cloudinary";
 import fs from "fs";
 
 export const config = {

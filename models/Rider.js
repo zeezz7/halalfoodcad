@@ -39,30 +39,26 @@ const RiderSchema = new mongoose.Schema({
     enum: ["Male", "Female", "Other"],
   },
 
+  // Identity & Documentation
   governmentId: {
-    type: { url: String, publicId: String },
-    required: false,
-    default: null,
+    url: String,
+    publicId: String,
   },
   driversLicense: {
-    type: { url: String, publicId: String },
-    required: false,
-    default: null,
+    url: String,
+    publicId: String,
   },
   profilePhoto: {
-    type: { url: String, publicId: String },
-    required: false,
-    default: null,
+    url: String,
+    publicId: String,
   },
   vehicleRegistration: {
-    type: { url: String, publicId: String },
-    required: false,
-    default: null,
+    url: String,
+    publicId: String,
   },
   proofOfAddress: {
-    type: { url: String, publicId: String },
-    required: false,
-    default: null,
+    url: String,
+    publicId: String,
   },
 
   // Banking & Payment Details
