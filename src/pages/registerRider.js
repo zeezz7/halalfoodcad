@@ -276,7 +276,7 @@ export default function RegisterRider() {
                     htmlFor="driversLicense"
                     className="block text-sm font-medium text-[#1B3B31] mb-1"
                   >
-                    Driver's License (if using a motor vehicle)
+                    Driver`&apos;`s License (if using a motor vehicle)
                   </label>
                   <input
                     type="file"
