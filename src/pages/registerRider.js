@@ -1,10 +1,152 @@
-import React from "react";
+// pages/registerRider.js
+import React, { useState } from "react";
 import Image from "next/image";
 import Footer from "./../app/components/footer";
 import Nav from "./../app/components/nav";
 import Button from "./../app/ui/button";
+import { useRouter } from "next/router";
 
-export default function registerRider() {
+export default function RegisterRider() {
+  const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formError, setFormError] = useState("");
+  const [formSuccess, setFormSuccess] = useState("");
+  const [formData, setFormData] = useState({
+    fullName: "",
+    email: "",
+    phone: "",
+    dateOfBirth: "",
+    gender: "",
+    bankAccountDetails: "",
+    upiWalletDetails: "",
+    preferredWorkingHours: "",
+    modeOfDelivery: "",
+    emergencyContact: "",
+    referralCode: "",
+    agreeToTerms: false,
+  });
+
+  const [files, setFiles] = useState({
+    governmentId: null,
+    driversLicense: null,
+    profilePhoto: null,
+    vehicleRegistration: null,
+    proofOfAddress: null,
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value, type, checked } = e.target;
+    setFormData({
+      ...formData,
+      [name]: type === "checkbox" ? checked : value,
+    });
+  };
+
+  const handleFileChange = (e) => {
+    const { name, files } = e.target;
+    if (files.length > 0) {
+      setFiles((prevFiles) => ({
+        ...prevFiles,
+        [name]: files[0],
+      }));
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Basic validation
+    if (
+      !formData.fullName ||
+      !formData.email ||
+      !formData.phone ||
+      !formData.dateOfBirth ||
+      !formData.gender
+    ) {
+      setFormError("Please fill in all required fields");
+      return;
+    }
+
+    if (!formData.agreeToTerms) {
+      setFormError("You must agree to the terms and conditions");
+      return;
+    }
+
+    try {
+      setIsSubmitting(true);
+      setFormError("");
+
+      // Create FormData object to send files and form data
+      const submitData = new FormData();
+
+      // Add text fields to FormData
+      Object.keys(formData).forEach((key) => {
+        submitData.append(key, formData[key]);
+      });
+
+      // Add files to FormData
+      Object.keys(files).forEach((key) => {
+        if (files[key]) {
+          submitData.append(key, files[key]);
+        }
+      });
+
+      // Send data to API
+      const response = await fetch("http://localhost:3000/api/rider/register", {
+        method: "POST",
+        body: submitData,
+      });
+      const contentType = response.headers.get("content-type");
+      if (!contentType || !contentType.includes("application/json")) {
+        const text = await response.text();
+        console.error("Non-JSON response:", text);
+        throw new Error("Server returned non-JSON response");
+      }
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.message || "Something went wrong");
+      }
+
+      // Success!
+      setFormSuccess(
+        "Registration successful! We'll review your application and contact you soon."
+      );
+      setFormData({
+        fullName: "",
+        email: "",
+        phone: "",
+        dateOfBirth: "",
+        gender: "",
+        bankAccountDetails: "",
+        upiWalletDetails: "",
+        preferredWorkingHours: "",
+        modeOfDelivery: "",
+        emergencyContact: "",
+        referralCode: "",
+        agreeToTerms: false,
+      });
+      setFiles({
+        governmentId: null,
+        driversLicense: null,
+        profilePhoto: null,
+        vehicleRegistration: null,
+        proofOfAddress: null,
+      });
+
+      // Redirect after successful registration if needed
+      // setTimeout(() => router.push('/registration-success'), 2000);
+    } catch (error) {
+      console.error("Registration failed:", error);
+      console.error("Registration failed:", error);
+      setFormError(error.message || "Registration failed. Please try again.");
+      setFormError(error.message || "Registration failed. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   return (
     <div className="bg-[#FFFAEA]">
       <div className="min-h-screen">
@@ -21,38 +163,90 @@ export default function registerRider() {
                 rewarding experience await!
               </p>
             </div>
-            <form className="flex flex-col space-y-6">
+
+            {formError && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                {formError}
+              </div>
+            )}
+
+            {formSuccess && (
+              <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+                {formSuccess}
+              </div>
+            )}
+
+            <form className="flex flex-col space-y-6" onSubmit={handleSubmit}>
               {/* Basic Information Section */}
               <div>
                 <h2 className="text-lg font-semibold text-[#1B3B31]">
                   Basic Information
                 </h2>
-                {[
-                  "Full Name",
-                  "Email Address",
-                  "Phone Number (with OTP verification)",
-                  "Date of Birth",
-                  "Gender",
-                ].map((placeholder, index) => (
-                  <div
-                    key={index}
-                    className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2"
+
+                <div className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2">
+                  <input
+                    type="text"
+                    name="fullName"
+                    placeholder="Full Name"
+                    className="border-none focus:outline-none w-full text-sm md:text-base"
+                    value={formData.fullName}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+
+                <div className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2">
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email Address"
+                    className="border-none focus:outline-none w-full text-sm md:text-base"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+
+                <div className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2">
+                  <input
+                    type="tel"
+                    name="phone"
+                    placeholder="Phone Number (with OTP verification)"
+                    className="border-none focus:outline-none w-full text-sm md:text-base"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+
+                <div className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2">
+                  <input
+                    type="date"
+                    name="dateOfBirth"
+                    placeholder="Date of Birth"
+                    className="border-none focus:outline-none w-full text-sm md:text-base"
+                    value={formData.dateOfBirth}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+
+                <div className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2">
+                  <select
+                    name="gender"
+                    className="border-none focus:outline-none w-full text-sm md:text-base bg-transparent"
+                    value={formData.gender}
+                    onChange={handleInputChange}
+                    required
                   >
-                    <input
-                      type={
-                        placeholder.includes("Email")
-                          ? "email"
-                          : placeholder.includes("Phone")
-                          ? "tel"
-                          : placeholder === "Date of Birth"
-                          ? "date"
-                          : "text"
-                      }
-                      placeholder={placeholder}
-                      className="border-none focus:outline-none w-full text-sm md:text-base"
-                    />
-                  </div>
-                ))}
+                    <option value="" disabled>
+                      Gender
+                    </option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                    <option value="Other">Other</option>
+                  </select>
+                </div>
               </div>
 
               {/* Identity & Documentation Section */}
@@ -60,27 +254,86 @@ export default function registerRider() {
                 <h2 className="text-lg font-semibold text-[#1B3B31]">
                   Identity & Documentation
                 </h2>
-                {[
-                  "Government-issued ID",
-                  "Driver's License (if using a motor vehicle)",
-                  "Profile Photo (Clear face image)",
-                  "Vehicle Registration (if applicable)",
-                  "Proof of Address",
-                ].map((label, index) => (
-                  <div key={index} className="mt-4">
-                    <label
-                      htmlFor={`file-upload-${index}`}
-                      className="block text-sm font-medium text-[#1B3B31] mb-1"
-                    >
-                      {label} (Upload)
-                    </label>
-                    <input
-                      type="file"
-                      id={`file-upload-${index}`}
-                      className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 text-sm md:text-base"
-                    />
-                  </div>
-                ))}
+
+                <div className="mt-4">
+                  <label
+                    htmlFor="governmentId"
+                    className="block text-sm font-medium text-[#1B3B31] mb-1"
+                  >
+                    Government-issued ID (Upload)
+                  </label>
+                  <input
+                    type="file"
+                    id="governmentId"
+                    name="governmentId"
+                    onChange={handleFileChange}
+                    className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 text-sm md:text-base"
+                  />
+                </div>
+
+                <div className="mt-4">
+                  <label
+                    htmlFor="driversLicense"
+                    className="block text-sm font-medium text-[#1B3B31] mb-1"
+                  >
+                    Driver's License (if using a motor vehicle)
+                  </label>
+                  <input
+                    type="file"
+                    id="driversLicense"
+                    name="driversLicense"
+                    onChange={handleFileChange}
+                    className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 text-sm md:text-base"
+                  />
+                </div>
+
+                <div className="mt-4">
+                  <label
+                    htmlFor="profilePhoto"
+                    className="block text-sm font-medium text-[#1B3B31] mb-1"
+                  >
+                    Profile Photo (Clear face image)
+                  </label>
+                  <input
+                    type="file"
+                    id="profilePhoto"
+                    name="profilePhoto"
+                    onChange={handleFileChange}
+                    className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 text-sm md:text-base"
+                  />
+                </div>
+
+                <div className="mt-4">
+                  <label
+                    htmlFor="vehicleRegistration"
+                    className="block text-sm font-medium text-[#1B3B31] mb-1"
+                  >
+                    Vehicle Registration (if applicable)
+                  </label>
+                  <input
+                    type="file"
+                    id="vehicleRegistration"
+                    name="vehicleRegistration"
+                    onChange={handleFileChange}
+                    className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 text-sm md:text-base"
+                  />
+                </div>
+
+                <div className="mt-4">
+                  <label
+                    htmlFor="proofOfAddress"
+                    className="block text-sm font-medium text-[#1B3B31] mb-1"
+                  >
+                    Proof of Address (Upload)
+                  </label>
+                  <input
+                    type="file"
+                    id="proofOfAddress"
+                    name="proofOfAddress"
+                    onChange={handleFileChange}
+                    className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 text-sm md:text-base"
+                  />
+                </div>
               </div>
 
               {/* Banking & Payment Details Section */}
@@ -88,21 +341,29 @@ export default function registerRider() {
                 <h2 className="text-lg font-semibold text-[#1B3B31]">
                   Banking & Payment Details
                 </h2>
-                {[
-                  "Bank Account Details for Payouts",
-                  "UPI/Wallet Payment Option (if applicable)",
-                ].map((placeholder, index) => (
-                  <div
-                    key={index}
-                    className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2"
-                  >
-                    <input
-                      type="text"
-                      placeholder={placeholder}
-                      className="border-none focus:outline-none w-full text-sm md:text-base"
-                    />
-                  </div>
-                ))}
+
+                <div className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2">
+                  <input
+                    type="text"
+                    name="bankAccountDetails"
+                    placeholder="Bank Account Details for Payouts"
+                    className="border-none focus:outline-none w-full text-sm md:text-base"
+                    value={formData.bankAccountDetails}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+
+                <div className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2">
+                  <input
+                    type="text"
+                    name="upiWalletDetails"
+                    placeholder="UPI/Wallet Payment Option (if applicable)"
+                    className="border-none focus:outline-none w-full text-sm md:text-base"
+                    value={formData.upiWalletDetails}
+                    onChange={handleInputChange}
+                  />
+                </div>
               </div>
 
               {/* Work Preferences Section */}
@@ -110,21 +371,36 @@ export default function registerRider() {
                 <h2 className="text-lg font-semibold text-[#1B3B31]">
                   Work Preferences
                 </h2>
-                {[
-                  "Preferred Working Hours",
-                  "Mode of Delivery (Bike, Bicycle, Car, On Foot)",
-                ].map((placeholder, index) => (
-                  <div
-                    key={index}
-                    className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2"
+
+                <div className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2">
+                  <input
+                    type="text"
+                    name="preferredWorkingHours"
+                    placeholder="Preferred Working Hours"
+                    className="border-none focus:outline-none w-full text-sm md:text-base"
+                    value={formData.preferredWorkingHours}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+
+                <div className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2">
+                  <select
+                    name="modeOfDelivery"
+                    className="border-none focus:outline-none w-full text-sm md:text-base bg-transparent"
+                    value={formData.modeOfDelivery}
+                    onChange={handleInputChange}
+                    required
                   >
-                    <input
-                      type="text"
-                      placeholder={placeholder}
-                      className="border-none focus:outline-none w-full text-sm md:text-base"
-                    />
-                  </div>
-                ))}
+                    <option value="" disabled>
+                      Mode of Delivery
+                    </option>
+                    <option value="Bike">Bike</option>
+                    <option value="Bicycle">Bicycle</option>
+                    <option value="Car">Car</option>
+                    <option value="On Foot">On Foot</option>
+                  </select>
+                </div>
               </div>
 
               {/* Other Details Section */}
@@ -132,28 +408,42 @@ export default function registerRider() {
                 <h2 className="text-lg font-semibold text-[#1B3B31]">
                   Other Details
                 </h2>
-                {["Emergency Contact", "Referral Code (if applicable)"].map(
-                  (placeholder, index) => (
-                    <div
-                      key={index}
-                      className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2"
-                    >
-                      <input
-                        type="text"
-                        placeholder={placeholder}
-                        className="border-none focus:outline-none w-full text-sm md:text-base"
-                      />
-                    </div>
-                  )
-                )}
+
+                <div className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2">
+                  <input
+                    type="text"
+                    name="emergencyContact"
+                    placeholder="Emergency Contact"
+                    className="border-none focus:outline-none w-full text-sm md:text-base"
+                    value={formData.emergencyContact}
+                    onChange={handleInputChange}
+                    required
+                  />
+                </div>
+
+                <div className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2">
+                  <input
+                    type="text"
+                    name="referralCode"
+                    placeholder="Referral Code (if applicable)"
+                    className="border-none focus:outline-none w-full text-sm md:text-base"
+                    value={formData.referralCode}
+                    onChange={handleInputChange}
+                  />
+                </div>
+
                 <div className="flex items-center mt-3">
                   <input
                     type="checkbox"
-                    id="terms"
+                    id="agreeToTerms"
+                    name="agreeToTerms"
+                    checked={formData.agreeToTerms}
+                    onChange={handleInputChange}
                     className="w-4 h-4 text-[#1B3B31] focus:ring focus:ring-[#9CACA7]"
+                    required
                   />
                   <label
-                    htmlFor="terms"
+                    htmlFor="agreeToTerms"
                     className="ml-2 text-sm md:text-base text-[#1B3B31]"
                   >
                     Agree to terms and conditions
@@ -163,7 +453,12 @@ export default function registerRider() {
 
               {/* Submit Button */}
               <div className="w-full md:w-[500px] rounded-xl">
-                <Button value="SEND" customWidth="w-full md:w-[500px]" />
+                <Button
+                  type="submit"
+                  value={isSubmitting ? "SUBMITTING..." : "SEND"}
+                  customWidth="w-full md:w-[500px]"
+                  disabled={isSubmitting}
+                />
               </div>
             </form>
           </div>

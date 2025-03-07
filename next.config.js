@@ -6,6 +6,11 @@ const nextConfig = {
     minimumCacheTTL: 60,
     formats: ["image/webp"],
   },
+  // Add API configuration for file uploads
+  api: {
+    bodyParser: false, // Disable the default body parser for form uploads
+    responseLimit: "8mb",
+  },
 };
 
 module.exports = nextConfig;
