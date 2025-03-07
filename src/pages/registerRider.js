@@ -11,6 +11,7 @@ export default function RegisterRider() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formError, setFormError] = useState("");
   const [formSuccess, setFormSuccess] = useState("");
+
   const [formData, setFormData] = useState({
     fullName: "",
     email: "",
@@ -43,11 +44,11 @@ export default function RegisterRider() {
   };
 
   const handleFileChange = (e) => {
-    const { name, files } = e.target;
-    if (files.length > 0) {
-      setFiles((prevFiles) => ({
-        ...prevFiles,
-        [name]: files[0],
+    const { name, files: fileList } = e.target;
+    if (fileList.length > 0) {
+      setFiles((prev) => ({
+        ...prev,
+        [name]: fileList[0],
       }));
     }
   };
@@ -91,19 +92,52 @@ export default function RegisterRider() {
         }
       });
 
+      // Get the base URL - important for correct API path in production
+      const baseUrl = process.env.NEXT_PUBLIC_API_BASE_URL || "";
+      const apiUrl = `${baseUrl}/api/rider/register`;
+
+      console.log("Submitting to API URL:", apiUrl);
+
       // Send data to API
-      const response = await fetch("/api/rider/register", {
+      const response = await fetch(apiUrl, {
         method: "POST",
         body: submitData,
       });
+
+      // Log the raw response status and headers for debugging
+      console.log("Response status:", response.status);
+      console.log(
+        "Response headers:",
+        Object.fromEntries([...response.headers.entries()])
+      );
+
+      // Check for non-JSON response
       const contentType = response.headers.get("content-type");
+      let data;
+
       if (!contentType || !contentType.includes("application/json")) {
         const text = await response.text();
         console.error("Non-JSON response:", text);
+
+        // If we're getting a 405 Method Not Allowed, try verifying the API route
+        if (response.status === 405) {
+          // Optional: try an OPTIONS request to debug API route issues
+          try {
+            const optionsResponse = await fetch(apiUrl, { method: "OPTIONS" });
+            console.log("OPTIONS status:", optionsResponse.status);
+          } catch (optionsError) {
+            console.error("OPTIONS check failed:", optionsError);
+          }
+
+          throw new Error(
+            `Method not allowed (405) - Ensure API route exists at ${apiUrl} and accepts POST requests`
+          );
+        }
+
         throw new Error("Server returned non-JSON response");
       }
 
-      const data = await response.json();
+      data = await response.json();
 
       if (!response.ok) {
         throw new Error(data.message || "Something went wrong");
@@ -113,6 +147,8 @@ export default function RegisterRider() {
       setFormSuccess(
         "Registration successful! We'll review your application and contact you soon."
       );
+
+      // Reset form
       setFormData({
         fullName: "",
         email: "",
@@ -127,6 +163,7 @@ export default function RegisterRider() {
         referralCode: "",
         agreeToTerms: false,
       });
+
       setFiles({
         governmentId: null,
         driversLicense: null,
@@ -134,18 +171,13 @@ export default function RegisterRider() {
         vehicleRegistration: null,
         proofOfAddress: null,
       });
-
-      // Redirect after successful registration if needed
-      // setTimeout(() => router.push('/registration-success'), 2000);
     } catch (error) {
-      console.error("Registration failed:", error);
       console.error("Registration failed:", error);
       setFormError(error.message || "Registration failed. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
-
   return (
     <div className="bg-[#FFFAEA]">
       <div className="min-h-screen">
