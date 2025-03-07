@@ -5,5 +5,11 @@
       "methods": ["POST", "OPTIONS"],
       "dest": "/api/rider/register"
     }
-  ]
+  ],
+  "functions": {
+    "api/rider/register.js": {
+      "memory": 1024,
+      "maxDuration": 10
+    }
+  }
 }
