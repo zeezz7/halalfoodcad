@@ -1,17 +1,41 @@
-// app/api/rider/register/route.js
-import { NextResponse } from "next/server";
+// src/pages/api/rider/register.jsriderData
 import { IncomingForm } from "formidable";
 import dbConnect from "../../../../lib/mongodb";
 import Rider from "../../../../models/Rider";
 import { uploadToCloudinary } from "../../../../lib/cloudinary";
 import fs from "fs";
 
-// This is required for app router API routes
-export const dynamic = "force-dynamic";
+export const config = {
+  api: {
+    bodyParser: false, // Disabling body parser to handle form data
+  },
+};
 
-// These handlers replace the single handler function in pages router
-export async function POST(request) {
-  console.log("API endpoint hit: POST");
+export default async function handler(req, res) {
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+  res.setHeader(
+    "Access-Control-Allow-Headers",
+    "X-Requested-With, Content-Type"
+  );
+
+  // Handle OPTIONS request
+  if (req.method === "OPTIONS") {
+    return res.status(200).end();
+  }
+
+  console.log("API endpoint hit:", req.method);
+  console.log("Request headers:", req.headers);
+
+  if (req.method !== "POST") {
+    return res.status(405).json({ message: "Method not allowed" });
+  }
+  console.log("API endpoint hit:", req.method);
+
+  if (req.method !== "POST") {
+    return res.status(405).json({ message: "Method not allowed" });
+  }
 
   try {
     // Test MongoDB connection first
@@ -19,87 +43,159 @@ export async function POST(request) {
     await dbConnect();
     console.log("MongoDB connected successfully");
 
-    // With app router, you need to handle FormData differently
-    const formData = await request.formData();
+    // Parse form data with formidable
+    const form = new IncomingForm({
+      multiples: true,
+      keepExtensions: true,
+    });
 
-    // Extract fields from formData
-    const fields = {
-      fullName: formData.get("fullName"),
-      email: formData.get("email"),
-      phone: formData.get("phone"),
-      dateOfBirth: formData.get("dateOfBirth"),
-      gender: formData.get("gender"),
-      bankAccountDetails: formData.get("bankAccountDetails") || "",
-      upiWalletDetails: formData.get("upiWalletDetails") || "",
-      preferredWorkingHours: formData.get("preferredWorkingHours") || "",
-      modeOfDelivery: formData.get("modeOfDelivery") || "",
-      emergencyContact: formData.get("emergencyContact") || "",
-      referralCode: formData.get("referralCode") || "",
-      agreeToTerms: formData.get("agreeToTerms") === "true",
-    };
+    // Use a Promise wrapper to handle the form parsing
+    const formData = await new Promise((resolve, reject) => {
+      form.parse(req, (err, fields, files) => {
+        if (err) {
+          console.error("Form parsing error:", err);
+          reject(err);
+          return;
+        }
+        resolve({ fields, files });
+      });
+    });
 
-    // Process files
-    // For file handling, you would need to implement a different approach with app router
-    // This is a simplified version without file handling
-
+    const { fields, files } = formData;
     console.log("Fields received:", Object.keys(fields));
+    console.log("Files received:", Object.keys(files));
 
     // Basic validation
     if (!fields.fullName || !fields.email || !fields.phone) {
-      return NextResponse.json(
-        { message: "Missing required fields" },
-        { status: 400 }
-      );
+      return res.status(400).json({ message: "Missing required fields" });
     }
 
-    // Create rider data with the fields
+    // Process fields - extract single values from arrays
+    const processedFields = {};
+    Object.keys(fields).forEach((key) => {
+      // If the field is an array, take the first value
+      processedFields[key] = Array.isArray(fields[key])
+        ? fields[key][0]
+        : fields[key];
+    });
+
+    // Create rider data with processed fields
     const riderData = {
-      fullName: fields.fullName,
-      email: fields.email,
-      phone: fields.phone,
-      dateOfBirth: fields.dateOfBirth
-        ? new Date(fields.dateOfBirth)
-        : new Date(),
-      gender: fields.gender || "",
-      bankAccountDetails: fields.bankAccountDetails || "",
-      upiWalletDetails: fields.upiWalletDetails || "",
-      preferredWorkingHours: fields.preferredWorkingHours || "",
-      modeOfDelivery: fields.modeOfDelivery || "",
-      emergencyContact: fields.emergencyContact || "",
-      referralCode: fields.referralCode || "",
-      agreeToTerms: fields.agreeToTerms,
+      fullName: processedFields.fullName,
+      email: processedFields.email,
+      phone: processedFields.phone,
+      dateOfBirth: processedFields.dateOfBirth
+        ? new Date(processedFields.dateOfBirth)
+        : undefined,
+      gender: processedFields.gender || "",
+      bankAccountDetails: processedFields.bankAccountDetails || "",
+      upiWalletDetails: processedFields.upiWalletDetails || "",
+      preferredWorkingHours: processedFields.preferredWorkingHours || "",
+      modeOfDelivery: processedFields.modeOfDelivery || "",
+      emergencyContact: processedFields.emergencyContact || "",
+      referralCode: processedFields.referralCode || "",
+      agreeToTerms: processedFields.agreeToTerms === "true",
     };
+
+    if (Object.keys(files).length > 0) {
+      console.log("Processing file uploads to Cloudinary...");
+
+      // Create an array of file upload promises
+      const uploadPromises = [];
+
+      // Process each document type
+      const documentTypes = [
+        "governmentId",
+        "driversLicense",
+        "profilePhoto",
+        "vehicleRegistration",
+        "proofOfAddress",
+      ];
+
+      for (const docType of documentTypes) {
+        if (files[docType]) {
+          const file = Array.isArray(files[docType])
+            ? files[docType][0]
+            : files[docType];
+
+          if (file && file.filepath) {
+            console.log(`Processing ${docType} file...`);
+
+            try {
+              // Read file as buffer
+              const fileBuffer = fs.readFileSync(file.filepath);
+
+              // Convert to base64 for Cloudinary
+              const base64Image = `data:${
+                file.mimetype || "application/octet-stream"
+              };base64,${fileBuffer.toString("base64")}`;
+
+              // Create upload promise
+              const uploadPromise = uploadToCloudinary(
+                base64Image,
+                "rider-documents"
+              )
+                .then((result) => {
+                  console.log(`${docType} uploaded to Cloudinary:`, result.url);
+
+                  // Add to rider data
+                  riderData[docType] = {
+                    url: result.url,
+                    publicId: result.publicId,
+                  };
+
+                  // Cleanup temp file
+                  fs.unlinkSync(file.filepath);
+                })
+                .catch((error) => {
+                  console.error(`Error uploading ${docType}:`, error);
+                });
+
+              uploadPromises.push(uploadPromise);
+            } catch (error) {
+              console.error(`Error processing ${docType} file:`, error);
+            }
+          }
+        }
+      }
+
+      // Wait for all uploads to complete
+      if (uploadPromises.length > 0) {
+        console.log(
+          `Waiting for ${uploadPromises.length} file uploads to complete...`
+        );
+        await Promise.all(uploadPromises);
+        console.log("All file uploads completed");
+      }
+    }
 
     console.log("Processed rider data:", riderData);
 
-    // Validate required fields
+    // Validate required fields based on your schema
     if (!riderData.gender) {
-      return NextResponse.json(
-        { message: "Gender is required" },
-        { status: 400 }
-      );
+      return res.status(400).json({ message: "Gender is required" });
     }
 
-    // Check for existing rider
+    if (!riderData.dateOfBirth) {
+      riderData.dateOfBirth = new Date(); // Default to today for testing
+    }
+
+    // Try saving to MongoDB with proper error handling
     try {
       console.log("Checking for existing rider with email:", riderData.email);
       const existingRider = await Rider.findOne({ email: riderData.email });
 
       if (existingRider) {
         console.log("Rider with this email already exists:", existingRider._id);
-        return NextResponse.json(
-          {
-            message: "A rider with this email address already exists",
-            error: "duplicate_email",
-          },
-          { status: 409 }
-        );
+        return res.status(409).json({
+          message: "A rider with this email address already exists",
+          error: "duplicate_email",
+        });
       }
     } catch (emailCheckError) {
       console.error("Error checking for existing email:", emailCheckError);
     }
-
-    // Save the rider
+    // In your API route
     try {
       console.log("Creating new rider instance");
       const rider = new Rider(riderData);
@@ -107,7 +203,7 @@ export async function POST(request) {
       // Log the exact data being saved
       console.log("Rider data:", JSON.stringify(riderData, null, 2));
 
-      // Save with timeout
+      // Try saving with a timeout to see if there's an issue with the connection closing
       const savedRider = await Promise.race([
         rider.save(),
         new Promise((_, reject) =>
@@ -120,43 +216,23 @@ export async function POST(request) {
 
       console.log("Rider saved successfully with ID:", savedRider._id);
 
-      return NextResponse.json(
-        {
-          message: "Rider registration successful",
-          rider: { id: savedRider._id, email: savedRider.email },
-        },
-        { status: 201 }
-      );
+      return res.status(201).json({
+        message: "Rider registration successful",
+        rider: { id: savedRider._id, email: savedRider.email },
+      });
     } catch (error) {
       console.error("Save error:", error);
-      return NextResponse.json(
-        {
-          message: "Save failed",
-          error: error.message,
-        },
-        { status: 400 }
-      );
+      return res.status(400).json({
+        message: "Save failed",
+        error: error.message,
+      });
     }
   } catch (error) {
     console.error("Server error:", error);
-    return NextResponse.json(
-      {
-        message: "Server error",
-        error: error.message,
-      },
-      { status: 500 }
-    );
+    // Always return JSON even for errors
+    return res.status(500).json({
+      message: "Server error",
+      error: error.message,
+    });
   }
-}
-
-// Handle OPTIONS request for CORS
-export async function OPTIONS() {
-  return new NextResponse(null, {
-    status: 200,
-    headers: {
-      "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
-      "Access-Control-Allow-Headers": "Content-Type, Authorization",
-      "Access-Control-Allow-Origin": "*",
-    },
-  });
 }
