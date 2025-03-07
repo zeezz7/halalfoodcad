@@ -92,13 +92,10 @@ export default function RegisterRider() {
       });
 
       // Send data to API
-      const response = await fetch(
-        "https://halalfoodcad-ehzb.vercel.app/api/rider/register",
-        {
-          method: "POST",
-          body: submitData,
-        }
-      );
+      const response = await fetch("/api/rider/register", {
+        method: "POST",
+        body: submitData,
+      });
       const contentType = response.headers.get("content-type");
       if (!contentType || !contentType.includes("application/json")) {
         const text = await response.text();
