@@ -8,7 +8,7 @@ const nextConfig = {
   },
   // Add API configuration for file uploads
   api: {
-    bodyParser: false, // Already set for formidable
+    bodyParser: true, // Already set for formidable
     responseLimit: "50mb", // Increase from default
   },
 };
