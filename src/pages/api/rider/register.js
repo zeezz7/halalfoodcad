@@ -162,7 +162,7 @@ import Rider from "../../../../models/Rider";
 import { uploadToCloudinary } from "../../../../lib/cloudinary";
 import multer from "multer";
 import { createRouter } from "next-connect";
-import { Readable } from "stream";
+// import { Readable } from "stream";
 
 // Configure multer for memory storage (no filesystem writes)
 const upload = multer({
