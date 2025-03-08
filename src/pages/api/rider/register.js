@@ -319,7 +319,6 @@ import dbConnect from "../../../../lib/mongodb";
 import Rider from "../../../../models/Rider";
 import { uploadToCloudinary } from "../../../../lib/cloudinary";
 import multer from "multer";
-import { createRouter } from "next-connect";
 
 // Configure multer for memory storage
 const upload = multer({
@@ -341,10 +340,7 @@ const runMiddleware = (req, res, fn) => {
   });
 };
 
-// Create and configure the router
-const router = createRouter();
-
-// Handle POST requests
+// Handle API requests
 async function handler(req, res) {
   // Only allow POST requests
   if (req.method !== "POST") {
@@ -478,5 +474,5 @@ export const config = {
   },
 };
 
-// Export the handler as default function (THIS IS CRUCIAL)
+// Export the handler as default function
 export default handler;
