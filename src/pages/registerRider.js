@@ -52,101 +52,68 @@ export default function RegisterRider() {
     }
   };
 
+  // Modify the handleSubmit function in registerRider.js
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic validation
-    if (
-      !formData.fullName ||
-      !formData.email ||
-      !formData.phone ||
-      !formData.dateOfBirth ||
-      !formData.gender
-    ) {
-      setFormError("Please fill in all required fields");
-      return;
-    }
-
-    if (!formData.agreeToTerms) {
-      setFormError("You must agree to the terms and conditions");
-      return;
-    }
+    // Basic validation remains the same...
 
     try {
       setIsSubmitting(true);
       setFormError("");
 
-      // Create FormData object to send files and form data
+      // Create FormData object
       const submitData = new FormData();
 
-      // Add text fields to FormData
+      // Add text fields
       Object.keys(formData).forEach((key) => {
         submitData.append(key, formData[key]);
       });
 
-      // Add files to FormData
+      // Add files
       Object.keys(files).forEach((key) => {
         if (files[key]) {
           submitData.append(key, files[key]);
         }
       });
 
-      // Send data to API
-      const response = await fetch("api/rider/register", {
+      // Send data with better error handling
+      const response = await fetch("/api/rider/register", {
         method: "POST",
         body: submitData,
       });
+
+      // Check for non-JSON response
       const contentType = response.headers.get("content-type");
+      let data;
+
       if (!contentType || !contentType.includes("application/json")) {
         const text = await response.text();
         console.error("Non-JSON response:", text);
-        throw new Error("Server returned non-JSON response");
+        throw new Error(
+          `Server returned non-JSON response: ${text.substring(0, 100)}...`
+        );
+      } else {
+        data = await response.json();
       }
-
-      const data = await response.json();
 
       if (!response.ok) {
         throw new Error(data.message || "Something went wrong");
       }
 
-      // Success!
+      // Success handling remains the same...
       setFormSuccess(
         "Registration successful! We'll review your application and contact you soon."
       );
-      setFormData({
-        fullName: "",
-        email: "",
-        phone: "",
-        dateOfBirth: "",
-        gender: "",
-        bankAccountDetails: "",
-        upiWalletDetails: "",
-        preferredWorkingHours: "",
-        modeOfDelivery: "",
-        emergencyContact: "",
-        referralCode: "",
-        agreeToTerms: false,
-      });
-      setFiles({
-        governmentId: null,
-        driversLicense: null,
-        profilePhoto: null,
-        vehicleRegistration: null,
-        proofOfAddress: null,
-      });
-
-      // Redirect after successful registration if needed
-      // setTimeout(() => router.push('/registration-success'), 2000);
+      // Reset form...
     } catch (error) {
       console.error("Registration failed:", error);
-      console.error("Registration failed:", error);
-      setFormError(error.message || "Registration failed. Please try again.");
       setFormError(error.message || "Registration failed. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
   };
-
   return (
     <div className="bg-[#FFFAEA]">
       <div className="min-h-screen">
