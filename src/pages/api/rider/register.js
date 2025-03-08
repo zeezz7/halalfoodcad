@@ -173,13 +173,13 @@ const upload = multer({
 });
 
 // Function to convert Buffer to Stream
-function bufferToStream(buffer) {
-  const readable = new Readable();
-  readable._read = () => {}; // _read is required but you can noop it
-  readable.push(buffer);
-  readable.push(null);
-  return readable;
-}
+// function bufferToStream(buffer) {
+//   const readable = new Readable();
+//   readable._read = () => {}; // _read is required but you can noop it
+//   readable.push(buffer);
+//   readable.push(null);
+//   return readable;
+// }
 
 // Create and configure the router
 const router = createRouter();
