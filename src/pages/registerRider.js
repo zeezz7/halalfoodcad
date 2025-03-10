@@ -115,6 +115,90 @@ export default function RegisterRider() {
       setIsSubmitting(false);
     }
   };
+
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+
+  //   try {
+  //     setIsSubmitting(true);
+  //     setFormError("");
+
+  //     // Create an object with the form data
+  //     const dataToSubmit = {};
+
+  //     // Add text fields
+  //     Object.keys(formData).forEach((key) => {
+  //       dataToSubmit[key] = formData[key];
+  //     });
+
+  //     // Process files to base64 strings
+  //     const filePromises = Object.keys(files).map(async (key) => {
+  //       if (files[key]) {
+  //         // Get file info to add to submission
+  //         const fileSize = files[key].size;
+  //         const fileType = files[key].type;
+  //         const fileName = files[key].name;
+
+  //         // Check file size (limit to 2MB for Google Sheets practicality)
+  //         if (fileSize > 2 * 1024 * 1024) {
+  //           throw new Error(
+  //             `File ${fileName} is too large. Please keep files under 2MB.`
+  //           );
+  //         }
+
+  //         // Convert file to base64
+  //         const base64 = await fileToBase64(files[key]);
+
+  //         // Add file data
+  //         dataToSubmit[`${key}_name`] = fileName;
+  //         dataToSubmit[`${key}_type`] = fileType;
+  //         dataToSubmit[`${key}_size`] = fileSize;
+  //         dataToSubmit[`${key}_data`] = base64;
+  //       }
+  //     });
+
+  //     // Wait for all file conversions to complete
+  //     await Promise.all(filePromises);
+
+  //     // Google Sheets submission using the Apps Script Web App URL
+  //     // Replace with your deployed Google Apps Script web app URL
+  //     const GOOGLE_SHEET_SCRIPT_URL =
+  //       "https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec";
+
+  //     // For larger data, we need to use a different approach than URL parameters
+  //     const response = await fetch(GOOGLE_SHEET_SCRIPT_URL, {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(dataToSubmit),
+  //       mode: "no-cors", // Important for cross-origin requests to Google Scripts
+  //     });
+
+  //     // Due to no-cors mode, we can't actually read the response
+  //     setFormSuccess(
+  //       "Registration successful! We'll review your application and contact you soon."
+  //     );
+
+  //     // Reset form if needed
+  //     // resetForm();
+  //   } catch (error) {
+  //     console.error("Registration failed:", error);
+  //     setFormError(error.message || "Registration failed. Please try again.");
+  //   } finally {
+  //     setIsSubmitting(false);
+  //   }
+  // };
+
+  // Helper function to convert file to base64
+  const fileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result.split(",")[1]); // Remove the data URL prefix
+      reader.onerror = (error) => reject(error);
+    });
+  };
   return (
     <div className="bg-[#FFFAEA]">
       <div className="min-h-screen">
