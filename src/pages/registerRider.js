@@ -5,7 +5,7 @@ import Footer from "./../app/components/footer";
 import Nav from "./../app/components/nav";
 import Button from "./../app/ui/button";
 import RiderAccordion from "../app/components/RiderAccordion";
-import axios from "axios";
+// import axios from "axios";
 // import { useRouter } from "next/router";
 
 export default function RegisterRider() {

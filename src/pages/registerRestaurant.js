@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function registerRestaurant() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [formError, setFormError] = useState("");
+  // const [formError, setFormError] = useState("");
   const [formSuccess, setFormSuccess] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
