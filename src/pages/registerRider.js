@@ -5,6 +5,7 @@ import Footer from "./../app/components/footer";
 import Nav from "./../app/components/nav";
 import Button from "./../app/ui/button";
 import RiderAccordion from "../app/components/RiderAccordion";
+import axios from "axios";
 // import { useRouter } from "next/router";
 
 export default function RegisterRider() {
@@ -80,28 +81,41 @@ export default function RegisterRider() {
       });
 
       // Send data with better error handling
-      const response = await fetch("/api/rider/register", {
-        method: "POST",
-        body: submitData,
-      });
+      // const response = await fetch("/api/rider/register", {
+      //   method: "POST",
+      //   body: submitData,
+      // });
 
-      // Check for non-JSON response
-      const contentType = response.headers.get("content-type");
-      let data;
+      const axiosResponse = await axios.post("/api/rider/register", submitData)
 
-      if (!contentType || !contentType.includes("application/json")) {
-        const text = await response.text();
-        console.error("Non-JSON response:", text);
-        throw new Error(
-          `Server returned non-JSON response: ${text.substring(0, 100)}...`
-        );
-      } else {
-        data = await response.json();
-      }
+      const data = axiosResponse.data
 
-      if (!response.ok) {
+      console.log("data", data)
+
+
+
+
+      // // Check for non-JSON response
+      // const contentType = response.headers.get("content-type");
+      // let data;
+
+      // if (!contentType || !contentType.includes("application/json")) {
+      //   const text = await response.text();
+      //   console.error("Non-JSON response:", text);
+      //   throw new Error(
+      //     `Server returned non-JSON response: ${text.substring(0, 100)}...`
+      //   );
+      // } else {
+      //   data = await response.json();
+      // }
+
+
+
+      if (!data) {
         throw new Error(data.message || "Something went wrong");
       }
+
+      return data
 
       // Success handling remains the same...
       setFormSuccess(
