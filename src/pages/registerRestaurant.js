@@ -23,31 +23,36 @@ export default function registerRestaurant() {
             </div>
             <form className="flex flex-col space-y-6">
               {/* Basic Information Section */}
-              <div>
-                <h2 className="text-lg font-semibold text-[#1B3B31]">
+              <div className="mb-8">
+                <h2 className="text-lg font-semibold text-[#1B3B31] mb-4">
                   Basic Information
                 </h2>
                 {[
                   "Restaurant Name",
                   "Owner/Manager Name",
                   "Contact Email",
-                  "Phone Number (with OTP verification)",
-                ].map((placeholder, index) => (
-                  <div
-                    key={index}
-                    className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2"
-                  >
-                    <input
-                      type={
-                        placeholder.includes("Email")
-                          ? "email"
-                          : placeholder.includes("Phone")
-                          ? "tel"
-                          : "text"
-                      }
-                      placeholder={placeholder}
-                      className="border-none focus:outline-none w-full text-sm md:text-base"
-                    />
+                  "Phone Number",
+                ].map((labelText, index) => (
+                  <div key={index} className="mt-4">
+                    <label
+                      htmlFor={`basic-field-${index}`}
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                      {labelText}
+                    </label>
+                    <div className="border border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3">
+                      <input
+                        id={`basic-field-${index}`}
+                        type={
+                          labelText.includes("Email")
+                            ? "email"
+                            : labelText.includes("Phone")
+                            ? "tel"
+                            : "text"
+                        }
+                        className="border-none focus:outline-none w-full text-sm md:text-base"
+                      />
+                    </div>
                   </div>
                 ))}
               </div>
@@ -58,63 +63,84 @@ export default function registerRestaurant() {
                   Business Details
                 </h2>
                 {[
-                  "Restaurant Address (with map integration)",
+                  "Restaurant Address",
                   "Business Registration Number",
-                  "FSSAI / Halal Certification (Upload Mandatory)",
+                  "FSSAI / Halal Certification",
                   "GST Number (if applicable)",
-                ].map((placeholder, index) => (
-                  <div
-                    key={index}
-                    className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2"
-                  >
-                    <input
-                      type={placeholder.includes("Upload") ? "file" : "text"}
-                      placeholder={placeholder}
-                      className="border-none focus:outline-none w-full text-sm md:text-base"
-                    />
+                ].map((labelText, index) => (
+                  <div key={index} className="mt-4">
+                    <label
+                      htmlFor={`business-field-${index}`}
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                      {labelText}
+                      {labelText.includes("Certification") && (
+                        <span className="text-red-500 ml-1">*</span>
+                      )}
+                    </label>
+                    <div className="border border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3">
+                      <input
+                        id={`business-field-${index}`}
+                        type={
+                          labelText.includes("Certification") ? "file" : "text"
+                        }
+                        className="border-none focus:outline-none w-full text-sm md:text-base"
+                        required={labelText.includes("Certification")}
+                      />
+                    </div>
                   </div>
                 ))}
               </div>
 
               {/* Menu Details Section */}
               <div>
-                <h2 className="text-lg font-semibold text-[#1B3B31]">
+                <h2 className="text-lg font-semibold text-[#1B3B31] mb-4">
                   Menu Details
                 </h2>
                 {[
                   "Type of Cuisine",
                   "Operating Hours",
                   "Average Preparation Time",
-                ].map((placeholder, index) => (
-                  <div
-                    key={index}
-                    className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2"
-                  >
-                    <input
-                      type="text"
-                      placeholder={placeholder}
-                      className="border-none focus:outline-none w-full text-sm md:text-base"
-                    />
+                ].map((labelText, index) => (
+                  <div key={index} className="mt-4">
+                    <label
+                      htmlFor={`menu-field-${index}`}
+                      className="block text-sm font-medium text-gray-700 mb-1"
+                    >
+                      {labelText}
+                    </label>
+                    <div className="border border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3">
+                      <input
+                        id={`menu-field-${index}`}
+                        type="text"
+                        className="border-none focus:outline-none w-full text-sm md:text-base"
+                      />
+                    </div>
                   </div>
                 ))}
               </div>
 
               {/* Financial Details Section */}
               <div>
-                <h2 className="text-lg font-semibold text-[#1B3B31]">
+                <h2 className="text-lg font-semibold text-[#1B3B31] mb-4">
                   Financial Details
                 </h2>
-                {["Bank Account Option", "UPI/Wallet Option"].map(
-                  (placeholder, index) => (
-                    <div
-                      key={index}
-                      className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2"
-                    >
-                      <input
-                        type="text"
-                        placeholder={placeholder}
-                        className="border-none focus:outline-none w-full text-sm md:text-base"
-                      />
+                {["Bank Account No.", "UPI/Wallet Option"].map(
+                  (labelText, index) => (
+                    <div key={index} className="mt-4">
+                      <label
+                        htmlFor={`financial-field-${index}`}
+                        className="block text-sm font-medium text-gray-700 mb-1"
+                      >
+                        {labelText}
+                      </label>
+                      <div className="border border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3">
+                        <input
+                          id={`financial-field-${index}`}
+                          type="text"
+                          className="border-none focus:outline-none w-full text-sm md:text-base"
+                        />
+                      </div>
                     </div>
                   )
                 )}

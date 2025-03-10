@@ -4,6 +4,7 @@ import Image from "next/image";
 import Footer from "./../app/components/footer";
 import Nav from "./../app/components/nav";
 import Button from "./../app/ui/button";
+import RiderAccordion from "../app/components/RiderAccordion";
 // import { useRouter } from "next/router";
 
 export default function RegisterRider() {
@@ -146,79 +147,120 @@ export default function RegisterRider() {
             <form className="flex flex-col space-y-6" onSubmit={handleSubmit}>
               {/* Basic Information Section */}
               <div>
-                <h2 className="text-lg font-semibold text-[#1B3B31]">
+                <h2 className="text-lg font-semibold text-[#1B3B31] mb-4">
                   Basic Information
                 </h2>
 
-                <div className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2">
-                  <input
-                    type="text"
-                    name="fullName"
-                    placeholder="Full Name"
-                    className="border-none focus:outline-none w-full text-sm md:text-base"
-                    value={formData.fullName}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-
-                <div className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2">
-                  <input
-                    type="email"
-                    name="email"
-                    placeholder="Email Address"
-                    className="border-none focus:outline-none w-full text-sm md:text-base"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-
-                <div className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2">
-                  <input
-                    type="tel"
-                    name="phone"
-                    placeholder="Phone Number (with OTP verification)"
-                    className="border-none focus:outline-none w-full text-sm md:text-base"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-
-                <div className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2">
-                  <input
-                    type="date"
-                    name="dateOfBirth"
-                    placeholder="Date of Birth"
-                    className="border-none focus:outline-none w-full text-sm md:text-base"
-                    value={formData.dateOfBirth}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-
-                <div className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2">
-                  <select
-                    name="gender"
-                    className="border-none focus:outline-none w-full text-sm md:text-base bg-transparent"
-                    value={formData.gender}
-                    onChange={handleInputChange}
-                    required
+                <div className="mt-4">
+                  <label
+                    htmlFor="fullName"
+                    className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    <option value="" disabled>
-                      Gender
-                    </option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                    <option value="Other">Other</option>
-                  </select>
+                    Full Name
+                  </label>
+                  <div className="border border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3">
+                    <input
+                      type="text"
+                      id="fullName"
+                      name="fullName"
+                      className="border-none focus:outline-none w-full text-sm md:text-base"
+                      value={formData.fullName}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-4">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Email Address
+                  </label>
+                  <div className="border border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3">
+                    <input
+                      type="email"
+                      id="email"
+                      name="email"
+                      className="border-none focus:outline-none w-full text-sm md:text-base"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-4">
+                  <label
+                    htmlFor="phone"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Phone Number
+                  </label>
+                  <div className="border border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3">
+                    <input
+                      type="tel"
+                      id="phone"
+                      name="phone"
+                      className="border-none focus:outline-none w-full text-sm md:text-base"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-4">
+                  <label
+                    htmlFor="dateOfBirth"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Date of Birth
+                  </label>
+                  <div className="border border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3">
+                    <input
+                      id="dateOfBirth"
+                      type="date"
+                      name="dateOfBirth"
+                      className="border-none focus:outline-none w-full text-sm md:text-base"
+                      value={formData.dateOfBirth}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className="mt-4">
+                  <label
+                    htmlFor="gender"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Gender
+                  </label>
+                  <div className="border border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3">
+                    <select
+                      id="gender"
+                      name="gender"
+                      className="border-none focus:outline-none w-full text-sm md:text-base bg-transparent"
+                      value={formData.gender}
+                      onChange={handleInputChange}
+                      required
+                    >
+                      <option value="" disabled>
+                        Select Gender
+                      </option>
+                      <option value="Male">Male</option>
+                      <option value="Female">Female</option>
+                      <option value="Other">Other</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
               {/* Identity & Documentation Section */}
               <div>
-                <h2 className="text-lg font-semibold text-[#1B3B31]">
+                <h2 className="text-lg font-semibold text-[#1B3B31] mb-4">
                   Identity & Documentation
                 </h2>
 
@@ -234,7 +276,7 @@ export default function RegisterRider() {
                     id="governmentId"
                     name="governmentId"
                     onChange={handleFileChange}
-                    className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 text-sm md:text-base"
+                    className="border border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 text-sm md:text-base"
                   />
                 </div>
 
@@ -243,14 +285,14 @@ export default function RegisterRider() {
                     htmlFor="driversLicense"
                     className="block text-sm font-medium text-[#1B3B31] mb-1"
                   >
-                    Driver`&apos;`s License (if using a motor vehicle)
+                    Driver&apos;s License (if using a motor vehicle)
                   </label>
                   <input
                     type="file"
                     id="driversLicense"
                     name="driversLicense"
                     onChange={handleFileChange}
-                    className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 text-sm md:text-base"
+                    className="border border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 text-sm md:text-base"
                   />
                 </div>
 
@@ -266,7 +308,7 @@ export default function RegisterRider() {
                     id="profilePhoto"
                     name="profilePhoto"
                     onChange={handleFileChange}
-                    className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 text-sm md:text-base"
+                    className="border border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 text-sm md:text-base"
                   />
                 </div>
 
@@ -282,7 +324,7 @@ export default function RegisterRider() {
                     id="vehicleRegistration"
                     name="vehicleRegistration"
                     onChange={handleFileChange}
-                    className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 text-sm md:text-base"
+                    className="border border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 text-sm md:text-base"
                   />
                 </div>
 
@@ -298,105 +340,154 @@ export default function RegisterRider() {
                     id="proofOfAddress"
                     name="proofOfAddress"
                     onChange={handleFileChange}
-                    className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 text-sm md:text-base"
+                    className="border border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 text-sm md:text-base"
                   />
                 </div>
               </div>
 
               {/* Banking & Payment Details Section */}
               <div>
-                <h2 className="text-lg font-semibold text-[#1B3B31]">
+                <h2 className="text-lg font-semibold text-[#1B3B31] mb-4">
                   Banking & Payment Details
                 </h2>
 
-                <div className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2">
-                  <input
-                    type="text"
-                    name="bankAccountDetails"
-                    placeholder="Bank Account Details for Payouts"
-                    className="border-none focus:outline-none w-full text-sm md:text-base"
-                    value={formData.bankAccountDetails}
-                    onChange={handleInputChange}
-                    required
-                  />
+                <div className="mt-4">
+                  <label
+                    htmlFor="bankAccountDetails"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Bank Account Details for Payouts
+                  </label>
+                  <div className="border border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3">
+                    <input
+                      type="text"
+                      id="bankAccountDetails"
+                      name="bankAccountDetails"
+                      className="border-none focus:outline-none w-full text-sm md:text-base"
+                      value={formData.bankAccountDetails}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
                 </div>
 
-                <div className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2">
-                  <input
-                    type="text"
-                    name="upiWalletDetails"
-                    placeholder="UPI/Wallet Payment Option (if applicable)"
-                    className="border-none focus:outline-none w-full text-sm md:text-base"
-                    value={formData.upiWalletDetails}
-                    onChange={handleInputChange}
-                  />
+                <div className="mt-4">
+                  <label
+                    htmlFor="upiWalletDetails"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    UPI/Wallet Payment Option (if applicable)
+                  </label>
+                  <div className="border border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3">
+                    <input
+                      type="text"
+                      id="upiWalletDetails"
+                      name="upiWalletDetails"
+                      className="border-none focus:outline-none w-full text-sm md:text-base"
+                      value={formData.upiWalletDetails}
+                      onChange={handleInputChange}
+                    />
+                  </div>
                 </div>
               </div>
 
               {/* Work Preferences Section */}
               <div>
-                <h2 className="text-lg font-semibold text-[#1B3B31]">
+                <h2 className="text-lg font-semibold text-[#1B3B31] mb-4">
                   Work Preferences
                 </h2>
 
-                <div className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2">
-                  <input
-                    type="text"
-                    name="preferredWorkingHours"
-                    placeholder="Preferred Working Hours"
-                    className="border-none focus:outline-none w-full text-sm md:text-base"
-                    value={formData.preferredWorkingHours}
-                    onChange={handleInputChange}
-                    required
-                  />
+                <div className="mt-4">
+                  <label
+                    htmlFor="preferredWorkingHours"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Preferred Working Hours
+                  </label>
+                  <div className="border border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3">
+                    <input
+                      type="text"
+                      id="preferredWorkingHours"
+                      name="preferredWorkingHours"
+                      className="border-none focus:outline-none w-full text-sm md:text-base"
+                      value={formData.preferredWorkingHours}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
                 </div>
 
-                <div className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2">
-                  <select
-                    name="modeOfDelivery"
-                    className="border-none focus:outline-none w-full text-sm md:text-base bg-transparent"
-                    value={formData.modeOfDelivery}
-                    onChange={handleInputChange}
-                    required
+                <div className="mt-4">
+                  <label
+                    htmlFor="modeOfDelivery"
+                    className="block text-sm font-medium text-gray-700 mb-1"
                   >
-                    <option value="" disabled>
-                      Mode of Delivery
-                    </option>
-                    <option value="Bike">Bike</option>
-                    <option value="Bicycle">Bicycle</option>
-                    <option value="Car">Car</option>
-                    <option value="On Foot">On Foot</option>
-                  </select>
+                    Mode of Delivery
+                  </label>
+                  <div className="border border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3">
+                    <select
+                      id="modeOfDelivery"
+                      name="modeOfDelivery"
+                      className="border-none focus:outline-none w-full text-sm md:text-base bg-transparent"
+                      value={formData.modeOfDelivery}
+                      onChange={handleInputChange}
+                      required
+                    >
+                      <option value="" disabled>
+                        Select Mode of Delivery
+                      </option>
+                      <option value="Bike">Bike</option>
+                      <option value="Bicycle">Bicycle</option>
+                      <option value="Car">Car</option>
+                      <option value="On Foot">On Foot</option>
+                    </select>
+                  </div>
                 </div>
               </div>
 
               {/* Other Details Section */}
               <div>
-                <h2 className="text-lg font-semibold text-[#1B3B31]">
+                <h2 className="text-lg font-semibold text-[#1B3B31] mb-4">
                   Other Details
                 </h2>
 
-                <div className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2">
-                  <input
-                    type="text"
-                    name="emergencyContact"
-                    placeholder="Emergency Contact"
-                    className="border-none focus:outline-none w-full text-sm md:text-base"
-                    value={formData.emergencyContact}
-                    onChange={handleInputChange}
-                    required
-                  />
+                <div className="mt-4">
+                  <label
+                    htmlFor="emergencyContact"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Emergency Contact
+                  </label>
+                  <div className="border border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3">
+                    <input
+                      type="text"
+                      id="emergencyContact"
+                      name="emergencyContact"
+                      className="border-none focus:outline-none w-full text-sm md:text-base"
+                      value={formData.emergencyContact}
+                      onChange={handleInputChange}
+                      required
+                    />
+                  </div>
                 </div>
 
-                <div className="border-1 border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3 mt-2">
-                  <input
-                    type="text"
-                    name="referralCode"
-                    placeholder="Referral Code (if applicable)"
-                    className="border-none focus:outline-none w-full text-sm md:text-base"
-                    value={formData.referralCode}
-                    onChange={handleInputChange}
-                  />
+                <div className="mt-4">
+                  <label
+                    htmlFor="referralCode"
+                    className="block text-sm font-medium text-gray-700 mb-1"
+                  >
+                    Referral Code (if applicable)
+                  </label>
+                  <div className="border border-[#9CACA7] w-full md:w-[500px] rounded-lg p-2 pl-3">
+                    <input
+                      type="text"
+                      id="referralCode"
+                      name="referralCode"
+                      className="border-none focus:outline-none w-full text-sm md:text-base"
+                      value={formData.referralCode}
+                      onChange={handleInputChange}
+                    />
+                  </div>
                 </div>
 
                 <div className="flex items-center mt-3">
@@ -440,6 +531,9 @@ export default function RegisterRider() {
               className="object-contain"
             />
           </div>
+        </div>
+        <div className="flex justify-center items-center my-20">
+          <RiderAccordion />
         </div>
       </div>
       <Footer />
