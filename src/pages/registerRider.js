@@ -115,6 +115,7 @@ export default function RegisterRider() {
       setIsSubmitting(false);
     }
   };
+  // to google sheets
 
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
@@ -163,7 +164,8 @@ export default function RegisterRider() {
   //     // Google Sheets submission using the Apps Script Web App URL
   //     // Replace with your deployed Google Apps Script web app URL
   //     const GOOGLE_SHEET_SCRIPT_URL =
-  //       "https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec";
+  //       "https://script.google.com/u/0/home/projects/1dP7wjs-Jw1FNC4t1Lu86FeSPW8eKZRA9mcCj3C1Xfv8xzFB8XEvWGXXc/edit";
+  //     // "https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec";
 
   //     // For larger data, we need to use a different approach than URL parameters
   //     const response = await fetch(GOOGLE_SHEET_SCRIPT_URL, {
@@ -191,14 +193,14 @@ export default function RegisterRider() {
   // };
 
   // Helper function to convert file to base64
-  // const fileToBase64 = (file) => {
-  //   return new Promise((resolve, reject) => {
-  //     const reader = new FileReader();
-  //     reader.readAsDataURL(file);
-  //     reader.onload = () => resolve(reader.result.split(",")[1]); // Remove the data URL prefix
-  //     reader.onerror = (error) => reject(error);
-  //   });
-  // };
+  const fileToBase64 = (file) => {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result.split(",")[1]); // Remove the data URL prefix
+      reader.onerror = (error) => reject(error);
+    });
+  };
   return (
     <div className="bg-[#FFFAEA]">
       <div className="min-h-screen">
