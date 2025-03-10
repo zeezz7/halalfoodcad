@@ -191,14 +191,14 @@ export default function RegisterRider() {
   // };
 
   // Helper function to convert file to base64
-  const fileToBase64 = (file) => {
-    return new Promise((resolve, reject) => {
-      const reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = () => resolve(reader.result.split(",")[1]); // Remove the data URL prefix
-      reader.onerror = (error) => reject(error);
-    });
-  };
+  // const fileToBase64 = (file) => {
+  //   return new Promise((resolve, reject) => {
+  //     const reader = new FileReader();
+  //     reader.readAsDataURL(file);
+  //     reader.onload = () => resolve(reader.result.split(",")[1]); // Remove the data URL prefix
+  //     reader.onerror = (error) => reject(error);
+  //   });
+  // };
   return (
     <div className="bg-[#FFFAEA]">
       <div className="min-h-screen">
