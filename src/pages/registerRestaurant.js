@@ -4,7 +4,7 @@ import Nav from "../app/components/nav";
 import Button from "../app/ui/button";
 import Image from "next/image";
 
-export default function registerRestaurant() {
+export default function RegisterRestaurant() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   // const [formError, setFormError] = useState("");
   const [formSuccess, setFormSuccess] = useState("");

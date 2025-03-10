@@ -28,13 +28,13 @@ export default function RegisterRider() {
     agreeToTerms: false,
   });
 
-  const [files, setFiles] = useState({
-    governmentId: null,
-    driversLicense: null,
-    profilePhoto: null,
-    vehicleRegistration: null,
-    proofOfAddress: null,
-  });
+  // const [files, setFiles] = useState({
+  //   governmentId: null,
+  //   driversLicense: null,
+  //   profilePhoto: null,
+  //   vehicleRegistration: null,
+  //   proofOfAddress: null,
+  // });
 
   const handleInputChange = (e) => {
     const { name, value, type, checked } = e.target;
