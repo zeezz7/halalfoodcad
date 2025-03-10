@@ -4,7 +4,7 @@ export const generalQuestions = [
     id: "who-are-we",
     question: "Who are we?",
     answer:
-      "A Saudi platform that provides delivery services in  Canada through an online app established in 2012 as the first Saudi food delivery app in the region. We are committed to providing users with a comprehensive experience through an easy-to-use interface, daily promotions, and discounts, along with fast delivery service. Our services now cover over 102 cities across the Kingdom, supported by successful partnerships with more than 35,000 partners including restaurants, supermarkets, pharmacies, bakeries, flower shops, and more.",
+      "A platform that provides delivery services in  Canada through an online app established in 2012 as the first Canada food delivery app in the region. We are committed to providing users with a comprehensive experience through an easy-to-use interface, daily promotions, and discounts, along with fast delivery service. Our services now cover over 102 cities across the Kingdom, supported by successful partnerships with more than 35,000 partners including restaurants, supermarkets, pharmacies, bakeries, flower shops, and more.",
   },
   {
     id: "what-does-the-company-do",
