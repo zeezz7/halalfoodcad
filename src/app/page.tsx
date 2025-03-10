@@ -32,7 +32,7 @@ import QuickSearch from "./components/quicksearch";
 import Footer from "./components/footer";
 import Restaurant from "./components/restaurant";
 import HomeAccordion from "./components/HomeAccordion";
-import Testimonials from "./components/Testimonials";
+import Testimonials from "./components/testimonials";
 
 export default function Home() {
   return (
