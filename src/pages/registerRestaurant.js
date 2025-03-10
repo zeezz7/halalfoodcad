@@ -6,7 +6,7 @@ import Image from "next/image";
 
 export default function RegisterRestaurant() {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  // const [formError, setFormError] = useState("");
+  const [formError, setFormError] = useState("");
   const [formSuccess, setFormSuccess] = useState("");
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -56,6 +56,11 @@ export default function RegisterRestaurant() {
                 your details to get started!
               </p>
             </div>
+            {formError && (
+              <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded">
+                {formError}
+              </div>
+            )}
             {formSuccess && (
               <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
                 {formSuccess}
