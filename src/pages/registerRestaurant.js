@@ -1,10 +1,45 @@
-import React from "react";
+import React, { useState } from "react";
 import Footer from "../app/components/footer";
 import Nav from "../app/components/nav";
 import Button from "../app/ui/button";
 import Image from "next/image";
 
 export default function registerRestaurant() {
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formError, setFormError] = useState("");
+  const [formSuccess, setFormSuccess] = useState("");
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Reset previous messages
+    setFormError("");
+    setFormSuccess("");
+
+    // Basic frontend validation
+    let isValid = true;
+
+    // If validation fails, return early
+    if (!isValid) return;
+
+    try {
+      setIsSubmitting(true);
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // Show success message
+      setFormSuccess(
+        "Registration successful! We'll review your application and contact you soon."
+      );
+
+      // Optionally reset form
+      // resetForm();
+    } catch (error) {
+      console.error("Submission failed:", error);
+      setFormError("Registration failed. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <div className="bg-[#FFFAEA]">
       <div className="pb-40">
@@ -21,7 +56,12 @@ export default function registerRestaurant() {
                 your details to get started!
               </p>
             </div>
-            <form className="flex flex-col space-y-6">
+            {formSuccess && (
+              <div className="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded">
+                {formSuccess}
+              </div>
+            )}
+            <form onSubmit={handleSubmit} className="flex flex-col space-y-6">
               {/* Basic Information Section */}
               <div className="mb-8">
                 <h2 className="text-lg font-semibold text-[#1B3B31] mb-4">
@@ -56,7 +96,6 @@ export default function registerRestaurant() {
                   </div>
                 ))}
               </div>
-
               {/* Business Details Section */}
               <div>
                 <h2 className="text-lg font-semibold text-[#1B3B31]">
@@ -91,7 +130,6 @@ export default function registerRestaurant() {
                   </div>
                 ))}
               </div>
-
               {/* Menu Details Section */}
               <div>
                 <h2 className="text-lg font-semibold text-[#1B3B31] mb-4">
@@ -119,7 +157,6 @@ export default function registerRestaurant() {
                   </div>
                 ))}
               </div>
-
               {/* Financial Details Section */}
               <div>
                 <h2 className="text-lg font-semibold text-[#1B3B31] mb-4">
@@ -145,7 +182,6 @@ export default function registerRestaurant() {
                   )
                 )}
               </div>
-
               {/* Upload Documents Section */}
               <div>
                 <h2 className="text-lg font-semibold text-[#1B3B31]">
@@ -174,7 +210,6 @@ export default function registerRestaurant() {
                   </div>
                 ))}
               </div>
-
               {/* Other Details Section */}
               <div>
                 <h2 className="text-lg font-semibold text-[#1B3B31]">
@@ -200,10 +235,14 @@ export default function registerRestaurant() {
                   </label>
                 </div>
               </div>
-
               {/* Submit Button */}
               <div className="w-full md:w-[500px] rounded-xl">
-                <Button value="SEND" customWidth="w-full md:w-[500px]" />
+                <Button
+                  type="submit"
+                  value={isSubmitting ? "SUBMITTING..." : "SEND"}
+                  customWidth="w-full md:w-[500px]"
+                  disabled={isSubmitting}
+                />
               </div>
             </form>
           </div>

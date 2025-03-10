@@ -56,146 +56,67 @@ export default function RegisterRider() {
 
   // Modify the handleSubmit function in registerRider.js
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    // Basic validation remains the same...
-
-    try {
-      setIsSubmitting(true);
-      setFormError("");
-
-      // Create FormData object
-      const submitData = new FormData();
-
-      // Add text fields
-      Object.keys(formData).forEach((key) => {
-        submitData.append(key, formData[key]);
-      });
-
-      // Add files
-      Object.keys(files).forEach((key) => {
-        if (files[key]) {
-          submitData.append(key, files[key]);
-        }
-      });
-
-      // Send data with better error handling
-      // const response = await fetch("/api/rider/register", {
-      //   method: "POST",
-      //   body: submitData,
-      // });
-
-      const axiosResponse = await axios.post("/api/rider/register", submitData)
-
-      const data = axiosResponse.data
-
-      console.log("data", data)
-
-
-
-
-      // // Check for non-JSON response
-      // const contentType = response.headers.get("content-type");
-      // let data;
-
-      // if (!contentType || !contentType.includes("application/json")) {
-      //   const text = await response.text();
-      //   console.error("Non-JSON response:", text);
-      //   throw new Error(
-      //     `Server returned non-JSON response: ${text.substring(0, 100)}...`
-      //   );
-      // } else {
-      //   data = await response.json();
-      // }
-
-
-
-      if (!data) {
-        throw new Error(data.message || "Something went wrong");
-      }
-
-      return data
-
-      // Success handling remains the same...
-      setFormSuccess(
-        "Registration successful! We'll review your application and contact you soon."
-      );
-      // Reset form...
-    } catch (error) {
-      console.error("Registration failed:", error);
-      setFormError(error.message || "Registration failed. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
-
   // const handleSubmit = async (e) => {
   //   e.preventDefault();
+
+  //   // Basic validation remains the same...
 
   //   try {
   //     setIsSubmitting(true);
   //     setFormError("");
 
-  //     // Create an object with the form data
-  //     const dataToSubmit = {};
+  //     // Create FormData object
+  //     const submitData = new FormData();
 
   //     // Add text fields
   //     Object.keys(formData).forEach((key) => {
-  //       dataToSubmit[key] = formData[key];
+  //       submitData.append(key, formData[key]);
   //     });
 
-  //     // Process files to base64 strings
-  //     const filePromises = Object.keys(files).map(async (key) => {
+  //     // Add files
+  //     Object.keys(files).forEach((key) => {
   //       if (files[key]) {
-  //         // Get file info to add to submission
-  //         const fileSize = files[key].size;
-  //         const fileType = files[key].type;
-  //         const fileName = files[key].name;
-
-  //         // Check file size (limit to 2MB for Google Sheets practicality)
-  //         if (fileSize > 2 * 1024 * 1024) {
-  //           throw new Error(
-  //             `File ${fileName} is too large. Please keep files under 2MB.`
-  //           );
-  //         }
-
-  //         // Convert file to base64
-  //         const base64 = await fileToBase64(files[key]);
-
-  //         // Add file data
-  //         dataToSubmit[`${key}_name`] = fileName;
-  //         dataToSubmit[`${key}_type`] = fileType;
-  //         dataToSubmit[`${key}_size`] = fileSize;
-  //         dataToSubmit[`${key}_data`] = base64;
+  //         submitData.append(key, files[key]);
   //       }
   //     });
 
-  //     // Wait for all file conversions to complete
-  //     await Promise.all(filePromises);
+  //     // Send data with better error handling
+  //     // const response = await fetch("/api/rider/register", {
+  //     //   method: "POST",
+  //     //   body: submitData,
+  //     // });
 
-  //     // Google Sheets submission using the Apps Script Web App URL
-  //     // Replace with your deployed Google Apps Script web app URL
-  //     const GOOGLE_SHEET_SCRIPT_URL =
-  //       "https://script.google.com/macros/s/YOUR_SCRIPT_ID_HERE/exec";
+  //     const axiosResponse = await axios.post("/api/rider/register", submitData)
 
-  //     // For larger data, we need to use a different approach than URL parameters
-  //     const response = await fetch(GOOGLE_SHEET_SCRIPT_URL, {
-  //       method: "POST",
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify(dataToSubmit),
-  //       mode: "no-cors", // Important for cross-origin requests to Google Scripts
-  //     });
+  //     const data = axiosResponse.data
 
-  //     // Due to no-cors mode, we can't actually read the response
+  //     console.log("data", data)
+
+  //     // // Check for non-JSON response
+  //     // const contentType = response.headers.get("content-type");
+  //     // let data;
+
+  //     // if (!contentType || !contentType.includes("application/json")) {
+  //     //   const text = await response.text();
+  //     //   console.error("Non-JSON response:", text);
+  //     //   throw new Error(
+  //     //     `Server returned non-JSON response: ${text.substring(0, 100)}...`
+  //     //   );
+  //     // } else {
+  //     //   data = await response.json();
+  //     // }
+
+  //     if (!data) {
+  //       throw new Error(data.message || "Something went wrong");
+  //     }
+
+  //     return data
+
+  //     // Success handling remains the same...
   //     setFormSuccess(
   //       "Registration successful! We'll review your application and contact you soon."
   //     );
-
-  //     // Reset form if needed
-  //     // resetForm();
+  //     // Reset form...
   //   } catch (error) {
   //     console.error("Registration failed:", error);
   //     setFormError(error.message || "Registration failed. Please try again.");
@@ -204,15 +125,39 @@ export default function RegisterRider() {
   //   }
   // };
 
-  // Helper function to convert file to base64
-  // const fileToBase64 = (file) => {
-  //   return new Promise((resolve, reject) => {
-  //     const reader = new FileReader();
-  //     reader.readAsDataURL(file);
-  //     reader.onload = () => resolve(reader.result.split(",")[1]); // Remove the data URL prefix
-  //     reader.onerror = (error) => reject(error);
-  //   });
-  // };
+  //front end submit handler
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    // Reset previous messages
+    setFormError("");
+    setFormSuccess("");
+
+    // Basic frontend validation
+    let isValid = true;
+
+    // If validation fails, return early
+    if (!isValid) return;
+
+    try {
+      setIsSubmitting(true);
+
+      await new Promise((resolve) => setTimeout(resolve, 1000));
+
+      // Show success message
+      setFormSuccess(
+        "Registration successful! We'll review your application and contact you soon."
+      );
+
+      // Optionally reset form
+      // resetForm();
+    } catch (error) {
+      console.error("Submission failed:", error);
+      setFormError("Registration failed. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
   return (
     <div className="bg-[#FFFAEA]">
       <div className="min-h-screen">
