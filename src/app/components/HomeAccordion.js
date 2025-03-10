@@ -16,7 +16,7 @@ const HomeAccordion = () => {
     <div className="bg-[#FFFAEA] py-10 mb-20">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center text-brown-800 mb-10">
-          Got questions? We'll answer them all
+          Got questions? We `&apos;`ll answer them all
         </h2>
 
         <div className="max-w-3xl mx-auto">

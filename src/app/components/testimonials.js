@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import Image from "next/image";
+// import Image from "next/image";
 
 function Testimonials() {
   const testimonials = [
@@ -105,7 +105,7 @@ function Testimonials() {
                   </p>
                 </div>
                 <p className="text-gray-700 italic">
-                  "{testimonials[currentIndex].text}"
+                  {testimonials[currentIndex].text}
                 </p>
               </div>
             </div>
