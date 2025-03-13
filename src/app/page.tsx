@@ -36,7 +36,7 @@ import Testimonials from "./components/testimonials";
 
 export default function Home() {
   return (
-    <div className="bg-[#FFFAEA] overflow-auto scrollbar scrollbar-thin scrollbar-thumb-[#1B3B31] scrollbar-track-[#f0f0f0]">
+    <div className="bg-[#EDFDD5] overflow-auto scrollbar scrollbar-thin scrollbar-thumb-[#1B3B31] scrollbar-track-[#f0f0f0]">
       <div className="flex flex-col w-full h-full">
         <Nav />
         <Hero />
@@ -45,7 +45,7 @@ export default function Home() {
         <QuickSearch />
       </div>
       <Why />
-      <div className="flex flex-col bg-[#FFFAEA]">
+      <div className="flex flex-col bg-[#EDFDD5]">
         <Rider />
         <Restaurant />
       </div>

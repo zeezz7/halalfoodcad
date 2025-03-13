@@ -21,24 +21,24 @@ export default function why() {
   ];
 
   return (
-    <div className="bg-[#1B3B31] min-h-[550px] py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center px-4 sm:px-6 md:px-8">
-      <div className="text-white text-2xl sm:text-3xl md:text-4xl font-semibold w-full max-w-7xl mx-auto mb-8 sm:mb-12">
+    <div className="bg-[#FFFAEA] min-h-[550px] py-8 sm:py-12 md:py-16 flex flex-col items-center justify-center px-4 sm:px-6 md:px-8">
+      <div className="text-[#1B3B31] text-2xl sm:text-3xl md:text-4xl font-semibold w-full max-w-7xl mx-auto mb-8 sm:mb-12">
         Why Choose Us?
       </div>
       <div className="flex flex-col md:flex-row gap-6 md:gap-4 lg:gap-8 w-full max-w-7xl mx-auto">
         {obj.map((item, index) => (
           <div
             key={index}
-            className="w-full md:w-1/3 flex flex-col space-y-4 bg-[#FFFAEA] p-4 sm:p-5 md:p-6 rounded-2xl transition-transform hover:scale-105"
+            className="w-full md:w-1/3 flex flex-col space-y-4 bg-[#F6F5D6] p-4 sm:p-5 md:p-6 rounded-2xl transition-transform hover:scale-105"
           >
             <Image
               src={`/${item.icon}`}
               alt={item.title}
-              width={50}
-              height={50}
+              width={40}
+              height={40}
               quality={75}
               loading="lazy"
-              className="w-[40px] sm:w-[45px] md:w-[50px]"
+              className="w-[40px] sm:w-[45px] md:w-[40px] text-[#1B3B31]  "
             />
             <div className="text-lg sm:text-xl md:text-2xl font-semibold">
               {item.title}

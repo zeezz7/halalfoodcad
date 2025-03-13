@@ -13,7 +13,7 @@ const HomeAccordion = () => {
   };
 
   return (
-    <div className="bg-[#FFFAEA] py-10 mb-20">
+    <div className="bg-[#EDFDD5] py-10 pb-20">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-center text-brown-800 mb-10">
           Got questions? We&apos;ll answer them all

@@ -14,7 +14,7 @@ function QuickSearch() {
   };
 
   return (
-    <div className="py px-4 sm:px-6 lg:px-8 bg-[#FFFAEA] rounded-xl  max-w-4xl mx-auto -mt-10 relative z-10">
+    <div className="py px-4 sm:px-6 lg:px-8 bg-[#EDFDD5] rounded-xl  max-w-4xl mx-auto -mt-10 relative z-10">
       <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-3">
         <div className="flex-1 relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
