@@ -10,7 +10,7 @@ const FAQItem = ({ question, answer }) => {
   return (
     <div className="mb-4 bg-[#FFFAEA] border border-gray-200 rounded-lg">
       <button
-        className="flex justify-between items-center w-full p-4 text-left  hover:bg-gray-50 focus:outline-none"
+        className="flex justify-between items-center w-full p-4 text-left  hover:bg-[#FFEA00] focus:outline-none"
         onClick={() => setIsOpen(!isOpen)}
       >
         <span className="font-medium text-gray-900">{question}</span>

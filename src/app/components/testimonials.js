@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-// import Image from "next/image";
 
 function Testimonials() {
   const testimonials = [
@@ -49,32 +48,32 @@ function Testimonials() {
   };
 
   return (
-    <section className="py-16 bg-[#FFFAEA]">
+    <section className="py-16 bg-[#FDF6E3]">
       <div className="container mx-auto px-4 sm:px-6 lg:px-28">
         <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-4xl font-bold text-[#1B3B31] mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold text-[#333333] mb-4">
             What Our Customers Say
           </h2>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+          <p className="text-lg text-[#333333] max-w-2xl mx-auto">
             Discover why people love using Halal Goes for their food delivery
             needs
           </p>
         </div>
 
         <div className="max-w-4xl mx-auto">
-          <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 relative overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#1B3B31] to-[#607F72]"></div>
+          <div className="bg-white rounded-xl shadow-lg p-6 md:p-8 relative overflow-hidden border border-[#E0E0E0]">
+            <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-[#FFEA00] to-[#25D366]"></div>
 
             <div className="flex flex-col md:flex-row gap-6 items-center">
               <div className="relative w-24 h-24 md:w-32 md:h-32 flex-shrink-0">
-                <div className="w-full h-full rounded-full overflow-hidden border-4 border-[#607F72]">
+                <div className="w-full h-full rounded-full overflow-hidden border-4 border-[#FFEA00]">
                   <img
                     src={testimonials[currentIndex].image}
                     alt={testimonials[currentIndex].name}
                     className="w-full h-full object-cover"
                   />
                 </div>
-                <div className="absolute -bottom-2 -right-2 bg-[#1B3B31] text-white rounded-full w-10 h-10 flex items-center justify-center">
+                <div className="absolute -bottom-2 -right-2 bg-[#25D366] text-white rounded-full w-10 h-10 flex items-center justify-center">
                   <div className="flex items-center">
                     <span className="text-sm font-bold">
                       {testimonials[currentIndex].rating}
@@ -97,14 +96,14 @@ function Testimonials() {
 
               <div className="flex-1">
                 <div className="mb-4">
-                  <h3 className="text-xl font-semibold text-[#1B3B31]">
+                  <h3 className="text-xl font-semibold text-[#333333]">
                     {testimonials[currentIndex].name}
                   </h3>
                   <p className="text-sm text-gray-500">
                     {testimonials[currentIndex].role}
                   </p>
                 </div>
-                <p className="text-gray-700 italic">
+                <p className="text-[#333333] italic">
                   {testimonials[currentIndex].text}
                 </p>
               </div>
@@ -122,7 +121,7 @@ function Testimonials() {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-5 h-5 text-[#1B3B31]"
+                  className="w-5 h-5 text-[#333333]"
                 >
                   <path
                     strokeLinecap="round"
@@ -137,7 +136,7 @@ function Testimonials() {
                     key={index}
                     onClick={() => setCurrentIndex(index)}
                     className={`w-3 h-3 rounded-full ${
-                      index === currentIndex ? "bg-[#1B3B31]" : "bg-gray-300"
+                      index === currentIndex ? "bg-[#FFEA00]" : "bg-gray-300"
                     }`}
                     aria-label={`Go to testimonial ${index + 1}`}
                   />
@@ -154,7 +153,7 @@ function Testimonials() {
                   viewBox="0 0 24 24"
                   strokeWidth={1.5}
                   stroke="currentColor"
-                  className="w-5 h-5 text-[#1B3B31]"
+                  className="w-5 h-5 text-[#333333]"
                 >
                   <path
                     strokeLinecap="round"

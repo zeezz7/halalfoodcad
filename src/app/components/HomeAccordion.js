@@ -1,4 +1,3 @@
-// components/HomeAccordion.js
 "use client";
 import React, { useState } from "react";
 import { homeQuestions } from "../../data/faqData";
@@ -13,21 +12,23 @@ const HomeAccordion = () => {
   };
 
   return (
-    <div className="bg-[#EDFDD5] py-10 pb-20">
+    <div className="bg-[#FDF6E3] py-10 pb-20">
       <div className="container mx-auto px-4">
-        <h2 className="text-3xl font-bold text-center text-brown-800 mb-10">
+        <h2 className="text-3xl font-bold text-center text-[#333333] mb-10">
           Got questions? We&apos;ll answer them all
         </h2>
 
         <div className="max-w-3xl mx-auto">
           {homeQuestions.map((item) => (
-            <div key={item.id} className="border-b border-gray-200">
+            <div key={item.id} className="border-b border-[#E0E0E0]">
               <div
                 className="flex justify-between items-center py-6 cursor-pointer"
                 onClick={() => toggleItem(item.id)}
               >
-                <span className="text-lg font-medium ">{item.question}</span>
-                <span className="transform transition-transform duration-200">
+                <span className="text-lg font-medium text-[#333333]">
+                  {item.question}
+                </span>
+                <span className="transform transition-transform duration-200 text-[#25D366]">
                   {openItemId === item.id ? <FaChevronUp /> : <FaChevronDown />}
                 </span>
               </div>
@@ -37,7 +38,9 @@ const HomeAccordion = () => {
                   openItemId === item.id ? "max-h-96" : "max-h-0"
                 }`}
               >
-                <div className="text-md  px-6 pb-6">{item.answer}</div>
+                <div className="text-md text-[#333333] px-6 pb-6">
+                  {item.answer}
+                </div>
               </div>
             </div>
           ))}

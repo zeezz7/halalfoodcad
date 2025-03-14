@@ -13,7 +13,7 @@ const RiderAccordion = () => {
   };
 
   return (
-    <div className="bg-[#EDFDD5] py-8 flex justify-center">
+    <div className=" py-8 flex justify-center">
       <div className="container mx-auto px-4">
         <h2 className="text-3xl font-bold text-brown-800 mb-6">
           Frequently asked questions

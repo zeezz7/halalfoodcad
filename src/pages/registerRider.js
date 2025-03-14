@@ -77,7 +77,7 @@ export default function RegisterRider() {
   };
 
   return (
-    <div className="bg-[#FFFAEA]">
+    <div className="bg-[#FDF6E3]">
       {/* Nav with higher z-index to appear in front of everything */}
       <div className="relative z-50">
         <Nav />
@@ -103,10 +103,10 @@ export default function RegisterRider() {
           <div className="w-full lg:w-1/2 flex justify-center items-start p-4 lg:p-8 overflow-y-auto">
             <div className="w-full max-w-[700px] bg-[#FFFAEA] shadow-2xl rounded-2xl  p-6 lg:p-8">
               <div className="flex flex-col space-y-4 md:space-y-5">
-                <h1 className="text-2xl md:text-3xl text-[#1B3B31] font-bold">
+                <h1 className="text-2xl md:text-3xl text-[#333333] font-bold">
                   Join as a Rider & Start Earning Today!
                 </h1>
-                <p className="text-sm md:text-base">
+                <p className="text-sm md:text-base text-[#333333]">
                   Fill in your details to become a part of our trusted halal
                   food delivery network. Flexible hours, great earnings, and a
                   rewarding experience await!
@@ -126,7 +126,7 @@ export default function RegisterRider() {
               )}
 
               <form
-                className="flex flex-col space-y-6 mt-8"
+                className="flex flex-col space-y-6 mt-8 text-[#333333]"
                 onSubmit={handleSubmit}
               >
                 {/* Basic Information Section */}
@@ -507,7 +507,7 @@ export default function RegisterRider() {
           </div>
         </div>
 
-        <div className="flex w-full bg-[#EDFDD5] justify-center items-center py-20">
+        <div className="flex w-full bg-[#FDF6E3] justify-center items-center py-20">
           <RiderAccordion />
         </div>
       </div>

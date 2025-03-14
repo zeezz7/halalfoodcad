@@ -14,7 +14,7 @@ function QuickSearch() {
   };
 
   return (
-    <div className="py px-4 sm:px-6 lg:px-8 bg-[#EDFDD5] rounded-xl  max-w-4xl mx-auto -mt-10 relative z-10">
+    <div className="py px-4 sm:px-6 lg:px-8 bg-[#FDF6E3] rounded-xl  max-w-4xl mx-auto -mt-10 relative z-10">
       <form onSubmit={handleSearch} className="flex flex-col md:flex-row gap-3">
         <div className="flex-1 relative">
           <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -75,7 +75,7 @@ function QuickSearch() {
 
         <button
           type="submit"
-          className="bg-[#1B3B31] hover:bg-[#264a3e] text-white py-3 px-6 rounded-lg transition-colors min-w-fit flex items-center justify-center"
+          className="bg-[#FFEA00] hover:bg-[#c6bd57] text-[#333333] py-3 px-6 rounded-lg transition-colors min-w-fit flex items-center justify-center"
         >
           Search
           <svg
